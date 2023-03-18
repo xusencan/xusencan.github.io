@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>我的博客</title>
+  <title>摩都小柜</title>
   
-  <subtitle>又一个GoodHexo小站</subtitle>
+  <subtitle>为向往美好生活的人服务</subtitle>
   <link href="https://xusencan.github.io/atom.xml" rel="self"/>
   
   <link href="https://xusencan.github.io/"/>
