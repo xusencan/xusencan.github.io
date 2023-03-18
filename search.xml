@@ -124,6 +124,44 @@
       </tags>
   </entry>
   <entry>
+    <title>从零开始学aardio笔记：基础规范</title>
+    <url>/2020-10-aardio-notes-02.html</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>这里的基础规范不包括所有的语法，只是作为一个初学者注意到的可能会混淆的概念，会有出错的细节做个记录，以及为今后养成一些固定格式习惯之用，各种语法规范请参见aardio帮助文档即可。</p>
+<h1 id="基本规范"><a href="#基本规范" class="headerlink" title="基本规范"></a>基本规范</h1><h2 id="变量命名规则"><a href="#变量命名规则" class="headerlink" title="变量命名规则"></a>变量命名规则</h2><p>推荐用小驼峰命名法，即小写在前大写在后，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">var robotName = &quot;QQ机器人&quot;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="语句判别"><a href="#语句判别" class="headerlink" title="语句判别"></a>语句判别</h2><p>每行一句，以 <code>;</code> 结尾，不以换行为判断。实际上 <code>;</code> 不写也没关系，aardio会检查语句的完整性。为代码统一规范美观，建议语句结尾带上 <code>;</code> 结尾，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">if(mainForm)&#123;</span><br><span class="line">  mainForm.text = &quot;测试&quot;;</span><br><span class="line">  mainForm.show();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="空格-空行使用"><a href="#空格-空行使用" class="headerlink" title="空格/空行使用"></a>空格/空行使用</h2><ol>
+<li>相关代码放在一起，不相关代码用一个空行间隔</li>
+<li>赋值，比较等表达式符号两边各添加一个空格</li>
+<li><code>()</code> 内相关参数，条件等前后不留空格<blockquote>
+<p>校长的教程里有些是有空格，有些是不留空格的，自己统一下吧，如上面的代码段所示。</p>
+</blockquote>
+</li>
+</ol>
+<h1 id="语法注意事项"><a href="#语法注意事项" class="headerlink" title="语法注意事项"></a>语法注意事项</h1><h2 id="特殊符号"><a href="#特殊符号" class="headerlink" title="特殊符号"></a>特殊符号</h2><ol>
+<li><code>&#39;&#39;</code> ：与 <code>&quot;&quot;</code> 不同的是单引号支持转义，如 <code>str = &#39;abc\r\n&#39;</code> ，而双引号内转义符会处理成普通字符</li>
+<li><code>_</code> ：下划线开头表示常量，值不可改变</li>
+<li><code>::</code> ：声明一个全局常量，如 <code>::str = &quot;abc&quot;</code></li>
+<li><code>..</code> ：全局名字空间引用符，如 <code>..io.open();</code></li>
+<li><code>#</code> ：取长运算符(单目运算符)，如果对象是 <code>null</code> ，返回 <code>0</code> ，如果对象是字符串返回字符串长度</li>
+<li><code>++</code> ：一个加是运算符，两个加则是字符串连接符，如 <code>str = abc ++ 123</code> ，则 <code>str = abc123</code></li>
+<li><code>===</code> 或 <code>!==</code> ：<code>==</code> 判断值相等时，<code>0</code> 和 <code>false</code> 是一样的， 而三个等号则是全等式运算符，表示强匹配，此时 <code>null</code> 和 <code>0</code> <code>false</code> 是不一样的</li>
+</ol>
+<h2 id="其他事项"><a href="#其他事项" class="headerlink" title="其他事项"></a>其他事项</h2><ol>
+<li>aardio 对大小写敏感，<code>mainForm</code> 和 <code>mainform</code> 是不同的两个对象，<code>str = abc</code> 和 <code>stR = abc</code> 是不一样的</li>
+<li>除 aardio 核心库，外部库需要先 <code>import</code> 导入</li>
+<li>定义一个库时，使用其他库名字空间时需全局引用：<code>var out = ..fsys.createDir(outdir);</code></li>
+</ol>
+]]></content>
+      <categories>
+        <category>学编程</category>
+      </categories>
+      <tags>
+        <tag>aardio</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>网页模板 pug 基本语法</title>
     <url>/2020-12-hexo-pug-notes.html</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>pug 原名 <code>jade</code> ，因版权问题更名为 <code>pug</code> ，即哈巴狗。与 hexo 默认模块 <code>ejs</code> 一样，pug 也是一个模板引擎，可用于快速的网站开发，当然也可以用于静态博客网站的设计。本站点现时所用主题 manupassant 也使用了 <code>pug</code> 。</p>
@@ -224,44 +262,6 @@
       </categories>
       <tags>
         <tag>博客建站</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>从零开始学aardio笔记：基础规范</title>
-    <url>/2020-10-aardio-notes-02.html</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>这里的基础规范不包括所有的语法，只是作为一个初学者注意到的可能会混淆的概念，会有出错的细节做个记录，以及为今后养成一些固定格式习惯之用，各种语法规范请参见aardio帮助文档即可。</p>
-<h1 id="基本规范"><a href="#基本规范" class="headerlink" title="基本规范"></a>基本规范</h1><h2 id="变量命名规则"><a href="#变量命名规则" class="headerlink" title="变量命名规则"></a>变量命名规则</h2><p>推荐用小驼峰命名法，即小写在前大写在后，如：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">var robotName = &quot;QQ机器人&quot;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="语句判别"><a href="#语句判别" class="headerlink" title="语句判别"></a>语句判别</h2><p>每行一句，以 <code>;</code> 结尾，不以换行为判断。实际上 <code>;</code> 不写也没关系，aardio会检查语句的完整性。为代码统一规范美观，建议语句结尾带上 <code>;</code> 结尾，如：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">if(mainForm)&#123;</span><br><span class="line">  mainForm.text = &quot;测试&quot;;</span><br><span class="line">  mainForm.show();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="空格-空行使用"><a href="#空格-空行使用" class="headerlink" title="空格/空行使用"></a>空格/空行使用</h2><ol>
-<li>相关代码放在一起，不相关代码用一个空行间隔</li>
-<li>赋值，比较等表达式符号两边各添加一个空格</li>
-<li><code>()</code> 内相关参数，条件等前后不留空格<blockquote>
-<p>校长的教程里有些是有空格，有些是不留空格的，自己统一下吧，如上面的代码段所示。</p>
-</blockquote>
-</li>
-</ol>
-<h1 id="语法注意事项"><a href="#语法注意事项" class="headerlink" title="语法注意事项"></a>语法注意事项</h1><h2 id="特殊符号"><a href="#特殊符号" class="headerlink" title="特殊符号"></a>特殊符号</h2><ol>
-<li><code>&#39;&#39;</code> ：与 <code>&quot;&quot;</code> 不同的是单引号支持转义，如 <code>str = &#39;abc\r\n&#39;</code> ，而双引号内转义符会处理成普通字符</li>
-<li><code>_</code> ：下划线开头表示常量，值不可改变</li>
-<li><code>::</code> ：声明一个全局常量，如 <code>::str = &quot;abc&quot;</code></li>
-<li><code>..</code> ：全局名字空间引用符，如 <code>..io.open();</code></li>
-<li><code>#</code> ：取长运算符(单目运算符)，如果对象是 <code>null</code> ，返回 <code>0</code> ，如果对象是字符串返回字符串长度</li>
-<li><code>++</code> ：一个加是运算符，两个加则是字符串连接符，如 <code>str = abc ++ 123</code> ，则 <code>str = abc123</code></li>
-<li><code>===</code> 或 <code>!==</code> ：<code>==</code> 判断值相等时，<code>0</code> 和 <code>false</code> 是一样的， 而三个等号则是全等式运算符，表示强匹配，此时 <code>null</code> 和 <code>0</code> <code>false</code> 是不一样的</li>
-</ol>
-<h2 id="其他事项"><a href="#其他事项" class="headerlink" title="其他事项"></a>其他事项</h2><ol>
-<li>aardio 对大小写敏感，<code>mainForm</code> 和 <code>mainform</code> 是不同的两个对象，<code>str = abc</code> 和 <code>stR = abc</code> 是不一样的</li>
-<li>除 aardio 核心库，外部库需要先 <code>import</code> 导入</li>
-<li>定义一个库时，使用其他库名字空间时需全局引用：<code>var out = ..fsys.createDir(outdir);</code></li>
-</ol>
-]]></content>
-      <categories>
-        <category>学编程</category>
-      </categories>
-      <tags>
-        <tag>aardio</tag>
       </tags>
   </entry>
   <entry>
