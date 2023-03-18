@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="x5-fullscreen" content="true">
+<meta name="full-screen" content="yes">
+<meta name="theme-color" content="#317EFB" />
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=0" name="viewport">
+<meta name="description" content="Hexo是一个快速、简洁且高效的博客框架，支持 Markdown 的功能绝大部分功能；具有超快生成速度，让上百个页面在几秒内瞬间完成渲染；还拥有各式各样的插件等等。 但是就像很多教程里面写的那样，搭建 Hexo 本地环境，需要安装 Node.js、Git 以及使用 npm 进行安装和配置。这对于毫无经验的新手来说，是一个很大的挑战。同时，由于这些环境的存在，导致如果需要更换计算机的时候，重新安装配">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo，从此开始...">
+<meta property="og:url" content="https://xusencan.github.io/helloworld.html">
+<meta property="og:site_name" content="我的博客">
+<meta property="og:description" content="Hexo是一个快速、简洁且高效的博客框架，支持 Markdown 的功能绝大部分功能；具有超快生成速度，让上百个页面在几秒内瞬间完成渲染；还拥有各式各样的插件等等。 但是就像很多教程里面写的那样，搭建 Hexo 本地环境，需要安装 Node.js、Git 以及使用 npm 进行安装和配置。这对于毫无经验的新手来说，是一个很大的挑战。同时，由于这些环境的存在，导致如果需要更换计算机的时候，重新安装配">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xusencan.github.io/images/GoodHexo.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/828767/static/images/goodhexo_config_site.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/828767/static/images/hexo-new.gif">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/828767/static/images/hexo-edit.gif">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/828767/static/images/QR-atm.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/828767/static/images/QR-Taobao.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/828767/static/images/QR-QQ-260489333.png">
+<meta property="article:published_time" content="2019-12-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-07-18T04:32:06.000Z">
+<meta property="article:author" content="凹凸曼达人">
+<meta property="article:tag" content="博客建站">
+<meta property="article:tag" content="Hexo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xusencan.github.io/images/GoodHexo.png">
+
+    <meta name="keywords" content="GoodHexo说明">
+
+
+<title >Hexo，从此开始...</title>
+
+<!-- Favicon -->
+
+    <link href='/img/favicon.svg?v=2.0.3' rel='icon' type='image/png' sizes='16x16' ></link>
+
+
+    <link href='/img/favicon.svg?v=2.0.3' rel='icon' type='image/png' sizes='32x32' ></link>
+
+
+
+
+<!-- Plugin -->
+
+
+
+
+    
+<link rel="stylesheet" href="/css/plugins/bootstrap.row.css">
+
+    
+<link rel="stylesheet" href="https://unpkg.com/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.css">
+
+    
+<link rel="stylesheet" href="https://unpkg.com/@fancyapps/ui@4.0/dist/fancybox.css">
+
+    
+    
+
+
+
+
+<!-- Icon -->
+
+    
+<link rel="stylesheet" href="/css/plugins/font-awesome.min.css">
+
+
+
+
+<!-- Variable -->
+<script>window.ASYNC_CONFIG = {"hostname":"xusencan.github.io","author":"凹凸曼达人","root":"/","typed_text":null,"theme_version":"2.0.3","theme":{"switch":true,"default":"style-light"},"favicon":{"logo":"/img/favicon.svg","icon16":"/img/favicon.svg","icon32":"/img/favicon.svg","appleTouchIcon":null,"webmanifest":null,"visibilitychange":false,"hidden":"/failure.ico","showText":"(/≧▽≦/)Hey! Good again!","hideText":"(●—●)Oh, crash!"},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}.","hits":"${hits} results found","hits_time":"${hits} results found in ${time} ms","author":"Post author: ","copyright_link":"Post link: ","copyright_license_title":"Copyright Notice: ","copyright_license_content":"All articles in this blog are licensed under undefined unless otherwise stated.","copy_success":"Copied","copy_failure":"Copy failed","open_read_mode":"Enter reading mode","exit_read_mode":"Exit reading mode","notice_outdate_message":"It has been undefined days since the last update, the content of the article may be outdated.","just":"Just","min":"minutes ago","hour":"hours ago","day":"days ago","month":"months ago"},"swup":false,"plugin":{"flickr_justified_gallery":"https://unpkg.com/flickr-justified-gallery@latest/dist/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","user_tag":"fas fa-user-alt","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":true,"title":"default","height_limit":false}};</script>
+<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2020-07-18 12:32:06"};</script>
+
+<!-- Theme mode css -->
+<link data-swup-theme rel="stylesheet" href="/css/index.css?v=2.0.3" id="trm-switch-style">
+<script>
+    let defaultMode = ASYNC_CONFIG.theme.default !=='auto' ?  ASYNC_CONFIG.theme.default : (window.matchMedia("(prefers-color-scheme: light)").matches ? 'style-light' : 'style-dark')
+    let catchMode = localStorage.getItem('theme-mode') || defaultMode;
+    let type = catchMode === 'style-dark' ? 'add' : 'remove';
+    document.documentElement.classList[type]('dark')
+</script>
+
+<!-- CDN -->
+
+
+    
+    
+
+
+
+<!-- Site Analytics -->
+ 
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="我的博客" type="application/atom+xml">
+</head>
+
+<body>
+
+  <!-- app wrapper -->
+  <div class="trm-app-frame">
+
+    <!-- page preloader -->
+    <div class="trm-preloader">
+    <div class="trm-holder">
+        <div class="preloader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</div>
+    <!-- page preloader end -->
+
+    <!-- change mode preloader -->
+    <div class="trm-mode-swich-animation-frame">
+    <div class="trm-mode-swich-animation">
+        <i class="i-sun"><i class="iconfont far fa-sun"></i></i>
+        <div class="trm-horizon"></div>
+        <i class="i-moon"><i class="iconfont far fa-moon"></i></i>
+    </div>
+</div>
+    <!-- change mode preloader end -->
+
+      <!-- scroll container -->
+      <div id="trm-dynamic-content" class="trm-swup-animation">
+        <div id="trm-scroll-container" class="trm-scroll-container" data-scroll-container style="opacity: 0">
+          <div data-scroll-section id="content" class="trm-scroll-section">
+
+            <div class="locomotive-scroll__sticky-target" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none;"></div>
+
+            <!-- top bar -->
+            <header class="trm-top-bar" data-scroll data-scroll-sticky data-scroll-target=".locomotive-scroll__sticky-target" data-scroll-offset="-10">
+	<div class="container">
+		<div class="trm-left-side">
+			<!-- logo -->
+<a href="/" class="trm-logo-frame trm-anima-link">
+    
+        <img alt="logo" src="/img/favicon.svg">
+    
+    
+        <div class="trm-logo-text">
+            Async<span>Theme</span>
+        </div>
+    
+</a>
+<!-- logo end -->
+		</div>
+		<div class="trm-right-side">
+			<!-- menu -->
+<div class="trm-menu">
+    <nav>
+        <ul>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/" target="">
+                    Home
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/archives/" target="">
+                    Archives
+                </a>
+                
+            </li>
+            
+        </ul>
+    </nav>
+</div>
+<!-- menu end -->
+			
+    <!-- mode switcher place -->
+    <div class="trm-mode-switcher-place">
+        <div class="trm-mode-switcher">
+            <i class="iconfont far fa-sun"></i>
+            <input class="tgl tgl-light" id="trm-swich" type="checkbox">
+            <label class="trm-swich" for="trm-swich"></label>
+            <i class="iconfont far fa-moon"></i>
+        </div>
+    </div>
+    <!-- mode switcher place end -->
+
+			
+		</div>
+		<div class="trm-menu-btn">
+			<span></span>
+		</div>
+	</div>
+</header>
+            <!-- top bar end -->
+
+            <!-- body -->
+            
+<div class="trm-content-start">
+    <!-- banner -->
+    <div class="trm-banner" data-scroll data-scroll-direction="vertical">
+    
+    <!-- banner cover -->
+    <img style="object-position:top;object-fit:cover;" alt="banner" class="trm-banner-cover" data-scroll data-scroll-direction="vertical" data-scroll-speed="-3" src="/img/banner.png">
+    <!-- banner cover end -->
+    
+
+    <!-- banner content -->
+    <div class="trm-banner-content trm-overlay">
+        <div class="container" data-scroll data-scroll-direction="vertical" data-scroll-speed="0">
+            <div class="row">
+                
+                <div class="col-lg-4"></div>
+                
+                <div class="col-lg-8">
+
+                    <!-- banner title -->
+                    <div class="trm-banner-text ">
+                        <div class="trm-label trm-mb-20">
+                            NEWS LETTER
+                        </div>
+                        <h1 class="trm-mb-30 trm-hsmb-font">
+                            Hexo，从此开始...
+                        </h1>
+
+                        
+                            <ul class="trm-breadcrumbs trm-label">
+                                <li>
+                                    <a href="/" class="trm-anima-link">Home</a>
+                                </li>
+                                <li>
+                                    <span>
+                                        helloworld.html
+                                    </span
+                                ></li>
+                            </ul>
+                        
+                    </div>
+                    <!-- banner title end -->
+
+                    <!-- scroll hint -->
+                    <a href="#about-triger" data-scroll-to="#about-triger" data-scroll-offset="-130" class="trm-scroll-hint-frame">
+                        <div class="trm-scroll-hint"></div>
+                        <span class="trm-label">Scroll down</span>
+                    </a>
+                    <!-- scroll hint end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- banner content end -->
+</div>
+    <!-- banner end -->
+    <div class="container">
+        <div class="row">
+            
+                <div id="page-sidebar" class="col-lg-4 hidden-sm">
+                    <!-- main card -->
+                    
+
+<div class="trm-main-card-frame trm-sidebar">
+    <div class="trm-main-card" data-scroll data-scroll-repeat data-scroll-sticky data-scroll-target=".locomotive-scroll__sticky-target" data-scroll-offset="60"> 
+    
+        <!-- card header -->
+<div class="trm-mc-header">
+    <div class="trm-avatar-frame trm-mb-20">
+        <img alt="Avatar" class="trm-avatar" src="/img/avatar.jpg">
+    </div>
+    <h5 class="trm-name trm-mb-15">
+        ThemeAsync
+    </h5>
+    
+</div>
+<!-- card header end -->
+        <!-- sidebar social -->
+
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<div class="trm-social">
+    
+        <a href="https://github.com" title="Github" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-github"></i>
+        </a>
+    
+</div>
+
+<!-- sidebar social end -->
+        <!-- info -->
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<ul class="trm-table trm-mb-20">
+    
+        <li>
+            <div class="trm-label">
+                Residence:
+            </div>
+            <div class="trm-label trm-label-light">
+                Mars
+            </div>
+        </li>
+    
+</ul>
+<!-- info end -->
+
+        
+    
+    </div>
+</div>
+                    <!-- main card end -->
+                </div>
+            
+            <div id="page-content" class="col-lg-8">
+                <div class="trm-content" id="trm-content">
+                    <div data-scroll data-scroll-repeat data-scroll-offset="500" id="about-triger"></div>
+
+                    <div id="post-info" class="row hidden-sm">
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-calendar-alt trm-icon"></i><br>
+            01/01
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-clock trm-icon"></i><br>
+            00:00
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div id="post-author" class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-user trm-icon"></i><br>
+            凹凸曼达人
+        </div>
+    </div>
+</div>
+<div class="trm-card ">
+    <article id="article-container" class="trm-publication">
+    <p><a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>是一个快速、简洁且高效的博客框架，支持 <code>Markdown</code> 的绝大部分功能；具有超快生成速度，让数百个 <code>MarkDown</code> 源文件在几秒内快速渲染成全站 <code>HTML</code> 页面；还拥有各式各样的插件支持功能扩展。</p>
+<p>但是就像很多教程里面写的那样，搭建 Hexo 本地环境，需要安装 <code>Node.js</code>、<code>Git</code> 以及使用 <code>npm</code> 进行安装和配置。这对于毫无经验的新手来说，是一个很大的挑战。同时，由于这些环境的存在，导致如果需要更换计算机的时候，重新安装配置一个新的Hexo环境，又得花费一些功夫。</p>
+<p>所以呢，我们整合了一个 Hexo 便携版，来简化本地环境的部署，这就是我们的GoodHexo。</p>
+<p><img src="../images/GoodHexo.png"></p>
+<ul>
+<li>当你重装系统后，只要GoodHexo目录还在，直接接着用即可；</li>
+<li>当你想换个电脑，只需要将GoodHexo目录移到新电脑上即可。甚至，你可以将这个文件夹装到U盘里，走哪插哪就行。</li>
+</ul>
+<h1 id="软件介绍"><a href="#软件介绍" class="headerlink" title="软件介绍"></a>软件介绍</h1><p>那么所谓的便携版到底是什么？便携版就是将 Hexo 本地环境所需要的各种依赖环境的整合到一起，做成不需要安装的版本。</p>
+<p>本便携版当前版本所包含的软件如下：</p>
+<table>
+<thead>
+<tr>
+<th>程序</th>
+<th>版本</th>
+<th>更新时间</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Git</td>
+<td>2.7.4</td>
+<td>2020-7-18</td>
+</tr>
+<tr>
+<td>Nodejs</td>
+<td>12.16.2</td>
+<td>2020-7-18</td>
+</tr>
+<tr>
+<td>Npm</td>
+<td>6.14.4</td>
+<td>2020-7-18</td>
+</tr>
+<tr>
+<td>Hexo</td>
+<td>5.2.0</td>
+<td>2020-8-27</td>
+</tr>
+<tr>
+<td>Hexo-cli</td>
+<td>4.2.0</td>
+<td>2020-8-27</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>适用平台：<strong>Microsoft Windows</strong><br>关键词： <strong>GoodHexo</strong>，<strong>Hexo绿色版</strong>，<strong>Hexo便携版</strong>，<strong>Hexo配置</strong>，<strong>Hexo</strong>，<strong>U盘携带</strong>，<strong>GitHub Hexo</strong></p>
+</blockquote>
+<p>为了便携的需要，不能配置固定的环境变量，所以除此之外还有相应的批处理脚本，下文将详细介绍。</p>
+<h1 id="从零开始，一分钟使用-GoodHexo-写作环境"><a href="#从零开始，一分钟使用-GoodHexo-写作环境" class="headerlink" title="从零开始，一分钟使用 GoodHexo 写作环境"></a>从零开始，一分钟使用 GoodHexo 写作环境</h1><p>说了这么多，我们这就开始教你如何在1分钟内，从零开始使用 GoodHexo 写作环境！</p>
+<h2 id="认识文件目录"><a href="#认识文件目录" class="headerlink" title="认识文件目录"></a>认识文件目录</h2><p>该订制的GoodHexo便携包基本上已经包含了Hexo博客所需的所有依赖，<strong>添加新主题新功能如果缺依赖请按照主题文档去安装</strong>更新即可。<br>上面的<strong>压缩包下载解压</strong>后，其目录结构如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">GOODHEXO #便携包根目录</span><br><span class="line">|   1.新建文章.bat  #要新建文章运行此批处理，填文件名建议别用中文</span><br><span class="line">|   2.本地测试.bat  #写完文章可以启动本地服务端测试预览效果</span><br><span class="line">|   3.渲染并部署.bat #确定文章写完了，那么就运行此批处理发布</span><br><span class="line">|   启动命令行.bat #给有经验的人用，直达bash界面</span><br><span class="line">|   清理旧文件后部署.bat  #部署也没报错，但博客就是没更新或者其他异常，那么用这个来部署试试</span><br><span class="line">|   </span><br><span class="line">+---hexo    #hexo程序工作目录</span><br><span class="line">|   |   .gitignore  #指定Git提交时忽略的文件规则，一般也不要动</span><br><span class="line">|   |   db.json  #程序自动生成的，不要动</span><br><span class="line">|   |   package.json  #不要动</span><br><span class="line">|   |   _config.yml  #hexo的主配置文件，定义标题，作者，导航菜单等</span><br><span class="line">|   |   </span><br><span class="line">|   +---node_modules  #hexo的依赖环境，不要动</span><br><span class="line">|   +---scaffolds  #文章&#x2F;页面&#x2F;草稿模板，不会就不要动</span><br><span class="line">|   +---source  #网站根目录</span><br><span class="line">|   |   README.md #本便携包示例文档</span><br><span class="line">|   |   \---images  #图片资源，网站路径为：&#x2F;images</span><br><span class="line">|   |   |   GoodHexo.png  #图片引用地址为：&#x2F;images&#x2F;GoodHexo.png，也可以：..&#x2F;images&#x2F;GoodHexo.png</span><br><span class="line">|   |   \---_posts  #你所有的文章都存在这个目录底下，通过批处理新建文章会自动建到这个目录下</span><br><span class="line">|   |   |   hello-world.md  #示例文章源文件，该MarkDown文件会被hexo渲染成HTML页发布</span><br><span class="line">|   |   </span><br><span class="line">|   +---themes  #主题存放目录</span><br><span class="line">|   |   \---landscape #默认主题</span><br><span class="line">|   |   </span><br><span class="line">|       </span><br><span class="line">\---support #便携程序包，包含nodejs和Git环境，不要动</span><br></pre></td></tr></table></figure>
+
+<h2 id="开始使用"><a href="#开始使用" class="headerlink" title="开始使用"></a>开始使用</h2><h3 id="详细个性化设置"><a href="#详细个性化设置" class="headerlink" title="详细个性化设置"></a>详细个性化设置</h3><p>拿到这个便携包，一些基础配置和基本的主题设置等院长都已经给你做好了，只需要自行对博客网站进行个性化详细设置即可。</p>
+<p>个性化设置主要有两个地方：</p>
+<ol>
+<li>Hexo目录下的 <code>_config.yml</code> ，详见相应的参数注释，按要求填写，不想写就默认</li>
+<li>主题目录下的 <code>_config.yml</code> ，主题不同设置项不同，所以请参考主题对应的文档进行修改设置</li>
+</ol>
+<p>依次打开就能看个大概了，根据自己的需要及主题帮助完成自己要的个性化设置。更深入的个性化基本上需要在主题上做文章，请自行查看主题帮助，或者研究主题源代码即可完成。</p>
+<p>修改的时候请注意格式，否则会导致错误而无法正常使用，比如 <code>:</code> 一定要是英文的且后面有内容的话至少要跟一个空格，配置内容跟后面的 <code>#</code> 注释之间至少要有一个空格，具体错误可以启动命令行输入 <code>hexo s --debug</code> 查看。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/828767/static/images/goodhexo_config_site.png" alt="网站配置"></p>
+<p>上图就是一个网站配置示例，配置项 <code>:</code> 后面<strong>如果要添加值至少带了一个空格</strong>，值带中文或者特殊符号建议用英文引号 <code>&#39;&#39;</code> 引起来，一行以 <code>#</code> 开头表示注释内容，配置项后面加空格再 <code>#</code> 则后面部分才是注释，如下面一个配置项：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keywords: &#39;一网盟,yiwangmeng,GoodHexo,hexo便携版&#39; #网站SEO关键词，多个词用英文逗号区隔</span><br></pre></td></tr></table></figure>
+
+<h3 id="写一篇自己的文章"><a href="#写一篇自己的文章" class="headerlink" title="写一篇自己的文章"></a>写一篇自己的文章</h3><p>设置好后，就可以开始动手写自己的文章了。</p>
+<h4 id="step1-新建文章"><a href="#step1-新建文章" class="headerlink" title="step1.新建文章"></a>step1.新建文章</h4><p>运行 <code>1.新建文章.bat</code> ，按提示填写文章名称，建议不要使用中文。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/828767/static/images/hexo-new.gif"></p>
+<p>回车确认后会在 <code>hexo</code> 目录下的对应目录新建个 <code>.md</code> 文件，文件名以刚才输入的文章名称命名，注意提示的文件路径和新创建的文件名，如： <code>hexo\source\_posts\helloworld.md</code></p>
+<h4 id="step2-编辑文章MarkDown文件"><a href="#step2-编辑文章MarkDown文件" class="headerlink" title="step2. 编辑文章MarkDown文件"></a>step2. 编辑文章MarkDown文件</h4><p>使用任意文本编辑器打开你刚新建的文章MarkDown源文件，按约定格式修改 <code>Front-matter</code> 中参数值，以及在 <code>Front-matter</code> 之后写你想写的内容即可，推荐编辑器首选用vscode或者Atom，关于编辑器以下文章可以阅读下：</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://code.visualstudio.com/">vscode-跨平台，绿色免费，基本接近完美的编辑器</a></li>
+<li><a href="#">MarkDown编辑器推荐这篇文章</a></li>
+<li><a target="_blank" rel="noopener" href="https://typora.io/">typora - 所见即所得MarkDown编辑器，推荐小白用这个</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/zhuzhuyule/HexoEditor">基于Moeditor修改集成Hexo功能的编辑器</a></li>
+</ol>
+<p>如果不依赖MarkDown编辑器，那么你需要掌握基本的MarkDown语法，然后就可以用任意文本编辑器「当然，Windows系统自带的记事本还是不推荐用」，按MarkDown语法写文档了。<br>MarkDown语法可以参考 <a target="_blank" rel="noopener" href="http://xianbai.me/learn-md/article/about/readme.html">这个 Markdown 教程</a>。</p>
+<p><strong>需要额外注意的是</strong>：Hexo对MarkDown文档头有规范，就是在文档最开始两个 <code>---</code> 中间的那部分，官方称之为 <code>Front-matter</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: &#39;Hexo，从此开始...&#39;  #文章标题，新建文章的时候填的会自动写到这里</span><br><span class="line">date: 2018-1-12 17:19:27  #文章创建时间</span><br><span class="line">categories: 搞软件 #分类，也可以如下一行那种换行后写分类</span><br><span class="line">tags:  #标签</span><br><span class="line">  - 晒酷软  #这是个标签</span><br><span class="line">  - 做网站  #这是另一个标签</span><br><span class="line">toc: true  #是否显示目录，false不显示，true显示，需要主题支持</span><br><span class="line">top:  #填数字，值越大的文章在首页就越置顶，本包已集成</span><br><span class="line">comments: true  #是否允许评论，需要主题支持</span><br><span class="line">keywords: &#39;&#39;    #文章关键词，需要主题支持</span><br><span class="line">description:  &#39;文章摘要，可以是一大段，</span><br><span class="line">可以换行，用英文引号括起来&#39;  #不填则根据主题设计截取对应字数</span><br><span class="line">---</span><br><span class="line">上面部分是规定的头部信息，这行开始就是文章内容了...</span><br></pre></td></tr></table></figure>
+
+<p>对于文章来说，以上 <code>Front-matter</code> 参数除了 <code>title:</code> 都不是必须的，请根据自己的需求填写。</p>
+<blockquote>
+<p><strong>注意：每一个参数的 <code>:</code> 或者 <code>-</code> 后，都需要至少留一个空格，如果不填值就无所谓，或者将参数行删除都行，就是不能不留空格直接写，否则会报错。</strong></p>
+</blockquote>
+<p>如果参数值中间涉及特殊字符或者空格等，请使用英文的单引号 <code>&#39;&#39;</code> 将你的内容括起来，就如上面的示例一样。</p>
+<p>更多 <code>Front-matter</code> 参数详见官方文档：<a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/front-matter.html">https://hexo.io/zh-cn/docs/front-matter.html</a></p>
+<p>文章参数设置完后，就可以在 <code>---</code> 下一行写自己想写的任何内容了，以下都属于你文章的内容。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/828767/static/images/hexo-edit.gif"></p>
+<h4 id="step3-渲染并发布"><a href="#step3-渲染并发布" class="headerlink" title="step3.渲染并发布"></a>step3.渲染并发布</h4><p>文章写好保存，那就运行 <code>3.渲染并部署.bat</code> ，该批处理会将你的MarkDown源文件套用主题模板渲染成HTML静态页，并把静态页部署到网站空间，最后提示 <code>deploy done：git</code> 就表示已部署完成，要不了两分钟，访问你的网站地址就能看到效果了。</p>
+<p>以上步骤请仔细阅读，再写新文章，重复以上步骤即可。</p>
+<h3 id="文章增-删-改"><a href="#文章增-删-改" class="headerlink" title="文章增/删/改"></a>文章增/删/改</h3><ul>
+<li>增：也就是新建文章，请按前一章第1、2、3步执行</li>
+<li>删：删除一篇文章、页面或图片资源等，只需要将MarkDown等源文件删除，然后执行渲染并发布即可</li>
+<li>改：也就是前一章的第2、3步</li>
+<li>疑难杂症：有时候因为缓存或者一些莫名其妙的未知问题，可以尝试运行 <code>清理旧文件后部署.bat</code></li>
+</ul>
+<blockquote>
+<p>实际上任何增删改都需要重新渲染发布，等线上缓存更新完了才能在外网看到更改后的效果</p>
+</blockquote>
+<p>新手在使用过程中可能会遇到一些问题，请参考我们整理的：<a target="_blank" rel="noopener" href="http://yiwangmeng.com/?p=90">GoodHexo使用常见问题及解决办法</a>。</p>
+<h1 id="进阶"><a href="#进阶" class="headerlink" title="进阶"></a>进阶</h1><p>如果你喜欢折腾，Hexo进阶部署使用可以参考<a target="_blank" rel="noopener" href="http://yiwangmeng.com/?p=92">Hexo博客Git-VPS部署完整记录</a>。</p>
+<p>使用过程中如需帮助，欢迎关注微信公众号，淘宝店，我的博客或者加入我们的交流群。</p>
+<div style="float:left;border:solid 1px 000;margin:2px;"><img src="https://cdn.jsdelivr.net/gh/828767/static/images/QR-atm.png"  width="200" height="260" ></div>
+
+<div style="float:left;border:solid 1px 000;margin:2px;"><img src="https://cdn.jsdelivr.net/gh/828767/static/images/QR-Taobao.png" width="200" height="260" ></div>
+
+<div style="float:left;border:solid 1px 000;margin:2px;"><img src="https://cdn.jsdelivr.net/gh/828767/static/images/QR-QQ-260489333.png" width="200" height="260" ></div>
+<div style="float:none;clear:both;"></div>
+
+<h1 id="备注"><a href="#备注" class="headerlink" title="备注"></a>备注</h1><blockquote>
+<ul>
+<li>本文所有权归 <a target="_blank" rel="noopener" href="http://yiwangmeng.com/">一网盟</a> 所有，<a target="_blank" rel="noopener" href="http://yiwangmeng.com/?p=91">原文在此</a>；</li>
+<li>本便携版由 <a target="_blank" rel="noopener" href="http://yiwangmeng.com/">一网盟</a> 维护并提供技术支持；</li>
+</ul>
+</blockquote>
+
+</article>
+    
+    
+</div>
+<div id="post-next-prev" class="row">
+    <div class="col-lg-12">
+        <!-- title -->
+        <h5 class="trm-title-with-divider">
+            Other Articles
+            <span data-number="02"></span>
+        </h5>
+    </div>
+    
+        <div class="col-lg-6">
+    <div class="trm-blog-card trm-scroll-animation" data-scroll data-scroll-offset="40">
+        <a href="/2020-05-php-error-peer-fingerprint-did-not-match.html" class="trm-cover-frame trm-anima-link">
+            
+            
+                <img alt="cover" class="no-fancybox" src="/img/block.jpg">
+            
+        </a>
+        
+        <div class="trm-card-descr">
+            <div class="trm-label trm-category trm-mb-20">
+                <a href=" /categories/%E5%81%9A%E7%BD%91%E7%AB%99/">
+                    做网站
+                </a>
+            </div>
+            <h5>
+                <a href="/2020-05-php-error-peer-fingerprint-did-not-match.html" class="trm-anima-link">
+                    解决“Peer fingerprint did not match”错误提示
+                </a>
+            </h5>
+            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>20/05/20</li>
+                <li>21:33</li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</div>
+    
+    
+</div>
+
+    
+
+
+
+                    <div class="trm-divider footer-divider"></div>
+
+                    <!-- footer -->
+                    <footer class="trm-scroll-animation" data-scroll data-scroll-offset="50">
+
+    
+
+    
+
+    
+        <div class="trm-footer-item">
+            <span>
+                Powered by <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> v6.3.0
+            </span>
+            <span class="footer-separator" data-separator=" | "></span>
+            <span> 
+                Theme - 
+                <a rel="noopener" href='https://github.com/MaLuns/hexo-theme-async' target='_blank'>Async</a>
+                v2.0.3
+            </span>
+        </div>
+      
+
+     
+
+     
+</footer>
+ 
+                    <!-- footer end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+            <!-- body end -->
+
+            <div class="trm-fixed-container" data-scroll data-scroll-sticky data-scroll-target=".locomotive-scroll__sticky-target" data-scroll-offset="-10">
+    
+        <div class="trm-fixed-btn" data-title="Read Mode" onclick="asyncFun.switchReadMode()">
+            <i class="iconfont fas fa-book-reader"></i>
+        </div>
+    
+    
+    <div id="trm-back-top" class="trm-fixed-btn" data-title="Back To Top">
+        <i class="iconfont fas fa-arrow-up"></i>
+    </div>
+</div>
+          </div>
+        </div>
+      </div>
+      <!-- scroll container end -->
+
+  </div>
+  <!-- app wrapper end -->
+
+  
+  <!-- Plugin -->
+
+
+
+
+    
+    
+<script src="https://unpkg.com/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.js"></script>
+
+    
+<script src="https://unpkg.com/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+
+    
+
+    
+
+    
+
+    <!-- 数学公式 -->
+    
+
+    <!-- 评论插件 -->
+    
+        
+
+        
+    
+
+
+
+<!-- CDN -->
+
+
+    
+
+    
+
+    
+
+
+
+
+    <!-- Service Worker -->
+    
+    <!-- baidu push -->
+    
+
+
+<script id="async-script" src="/js/main.js?v=2.0.3"></script>
+
+</body>
+
+</html>
