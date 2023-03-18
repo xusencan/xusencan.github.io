@@ -101,6 +101,29 @@
       </tags>
   </entry>
   <entry>
+    <title>转：php源码随机输出某个目录下的图片API</title>
+    <url>/2020-09-php-image-api.html</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>搞了一大批美女图，想给网友过过眼，写个php源码随机输出某一个目录下的图片，可用于随机图片API接口。</p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><p>把下面的代码保存为 <code>imgapi.php</code> ：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">header(&#x27;Content-type: image/jpg&#x27;);</span><br><span class="line">$img_array = glob(&quot;./*.&#123;gif,jpg,png&#125;&quot;,GLOB_BRACE);</span><br><span class="line">$img = array_rand($img_array);</span><br><span class="line">$image = file_get_contents($img_array[$img]);</span><br><span class="line">echo $image;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p>保存就可以调用这个接口。</p>
+<h1 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h1><p>调用方式为：<code>域名/imgapi.php</code>，图片目录为 <code>imaapi.php</code> 同级目录。</p>
+<p>也可以自定义图片的目录，把下面代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$img_array = glob(&quot;./*.&#123;gif,jpg,png&#125;&quot;,GLOB_BRACE);</span><br></pre></td></tr></table></figure>
+
+<p>改为以下代码，<code>img</code> 是图片目录名，可以随意更改：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$img_array = glob(&quot;./img/*.&#123;gif,jpg,png&#125;&quot;,GLOB_BRACE);</span><br></pre></td></tr></table></figure>
+<p>这样就可以调用 <code>img</code> 目录下的图片了。</p>
+<p><a href="https://www.vmitu.com/webdaima/2020032051.html">原文链接</a></p>
+]]></content>
+      <categories>
+        <category>学编程</category>
+      </categories>
+      <tags>
+        <tag>混技能</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>从零开始学aardio笔记：基础规范</title>
     <url>/2020-10-aardio-notes-02.html</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>这里的基础规范不包括所有的语法，只是作为一个初学者注意到的可能会混淆的概念，会有出错的细节做个记录，以及为今后养成一些固定格式习惯之用，各种语法规范请参见aardio帮助文档即可。</p>
@@ -136,29 +159,6 @@
       </categories>
       <tags>
         <tag>aardio</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>转：php源码随机输出某个目录下的图片API</title>
-    <url>/2020-09-php-image-api.html</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>搞了一大批美女图，想给网友过过眼，写个php源码随机输出某一个目录下的图片，可用于随机图片API接口。</p>
-<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><p>把下面的代码保存为 <code>imgapi.php</code> ：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">header(&#x27;Content-type: image/jpg&#x27;);</span><br><span class="line">$img_array = glob(&quot;./*.&#123;gif,jpg,png&#125;&quot;,GLOB_BRACE);</span><br><span class="line">$img = array_rand($img_array);</span><br><span class="line">$image = file_get_contents($img_array[$img]);</span><br><span class="line">echo $image;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
-<p>保存就可以调用这个接口。</p>
-<h1 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h1><p>调用方式为：<code>域名/imgapi.php</code>，图片目录为 <code>imaapi.php</code> 同级目录。</p>
-<p>也可以自定义图片的目录，把下面代码：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$img_array = glob(&quot;./*.&#123;gif,jpg,png&#125;&quot;,GLOB_BRACE);</span><br></pre></td></tr></table></figure>
-
-<p>改为以下代码，<code>img</code> 是图片目录名，可以随意更改：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$img_array = glob(&quot;./img/*.&#123;gif,jpg,png&#125;&quot;,GLOB_BRACE);</span><br></pre></td></tr></table></figure>
-<p>这样就可以调用 <code>img</code> 目录下的图片了。</p>
-<p><a href="https://www.vmitu.com/webdaima/2020032051.html">原文链接</a></p>
-]]></content>
-      <categories>
-        <category>学编程</category>
-      </categories>
-      <tags>
-        <tag>混技能</tag>
       </tags>
   </entry>
   <entry>
