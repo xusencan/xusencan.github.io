@@ -335,18 +335,18 @@
     <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>有个PHP网站跑的好好的，闲来无事把宝塔面板里的软件升级了一把，系统里也update了一回。然后，发现网站功能不正常了，定时任务执行完成没有效果，线上生产环境，思来想去不知道哪里出错了，慌得一逼，还好最后解决得有惊无险！</p>
 <h1 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h1><p>用系统定时任务设置了个PHP任务，但任务结果迟迟不对，但 <code>tail -f /var/log/cron</code> 可见系统任务正常执行。</p>
 <h1 id="排查"><a href="#排查" class="headerlink" title="排查"></a>排查</h1><p>因为是线上环境，不敢冒然动手，只能一点点试探。因为升级过环境，所以也不可能把所有软件都想一遍，既然是PHP任务，那第一个想到的就是PHP程序出问题了。<br>检查下来PHP程序功能也没什么问题，除了定时任务执行结果不对，索性手动运行了一把：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 先切到网站目录，然后执行</span><br><span class="line">php artisan schedule:run</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 先切到网站目录，然后执行</span><br><span class="line">php artisan schedule:run</span><br></pre></td></tr></table></figure>
 
 <p>结果显示：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[Composer\Downloader\TransportException] Peer fingerprint did not match</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[Composer\Downloader\TransportException] Peer fingerprint did not match</span><br></pre></td></tr></table></figure>
 
 <p>这个错误Google一把，人家说是版本不匹配，再去看看自己安装的PHP版本，<code>7.2.31</code> 并没有错，但系统内用 <code>php -v</code> 却是 <code>5.6.4</code> ，版本不符，这个版本并没有安装过，也不知道怎么来的，不知道是删库塔更新错误还是 <code>yum update</code> 的时候哪里带来的，总归知道原因了。</p>
 <h1 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h1><h2 id="宝塔面板处理"><a href="#宝塔面板处理" class="headerlink" title="宝塔面板处理"></a>宝塔面板处理</h2><p>在宝塔面板上可以直接切换PHP命令行版本的功能：<code>宝塔面板》网站》PHP命令行版本</code> ，点击选择你要的版本即可。</p>
 <h2 id="系统内处理"><a href="#系统内处理" class="headerlink" title="系统内处理"></a>系统内处理</h2><p>如果没有删库塔上这个功能入口，也可以登录系统自行更改：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#找到PHP程序位置</span><br><span class="line">whereis php</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#找到PHP程序位置</span><br><span class="line">whereis php</span><br></pre></td></tr></table></figure>
 
 <p>会返回PHP路径，一般都在 <code>/usr/bin/php</code> ，然后把这个入口链接到你安装的PHP实际路径即可，如删库塔安装的PHP位置为：<code>/www/server/php/72/bin/php</code> ，那么，执行以下命令：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -sf &#x2F;www&#x2F;server&#x2F;php&#x2F;72&#x2F;bin&#x2F;php &#x2F;usr&#x2F;bin&#x2F;php</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -sf /www/server/php/72/bin/php /usr/bin/php</span><br></pre></td></tr></table></figure>
 
 <p>软链接创建完成后，再次 <code>php -v</code> 检查版本应该就正确了，此时PHP任务执行功能正常，故障得以消除。</p>
 

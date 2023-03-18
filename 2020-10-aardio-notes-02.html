@@ -334,9 +334,9 @@
     <article id="article-container" class="trm-publication">
     <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>这里的基础规范不包括所有的语法，只是作为一个初学者注意到的可能会混淆的概念，会有出错的细节做个记录，以及为今后养成一些固定格式习惯之用，各种语法规范请参见aardio帮助文档即可。</p>
 <h1 id="基本规范"><a href="#基本规范" class="headerlink" title="基本规范"></a>基本规范</h1><h2 id="变量命名规则"><a href="#变量命名规则" class="headerlink" title="变量命名规则"></a>变量命名规则</h2><p>推荐用小驼峰命名法，即小写在前大写在后，如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var robotName &#x3D; &quot;QQ机器人&quot;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var robotName = &quot;QQ机器人&quot;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <h2 id="语句判别"><a href="#语句判别" class="headerlink" title="语句判别"></a>语句判别</h2><p>每行一句，以 <code>;</code> 结尾，不以换行为判断。实际上 <code>;</code> 不写也没关系，aardio会检查语句的完整性。为代码统一规范美观，建议语句结尾带上 <code>;</code> 结尾，如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if(mainForm)&#123;</span><br><span class="line">  mainForm.text &#x3D; &quot;测试&quot;;</span><br><span class="line">  mainForm.show();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if(mainForm)&#123;</span><br><span class="line">  mainForm.text = &quot;测试&quot;;</span><br><span class="line">  mainForm.show();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="空格-空行使用"><a href="#空格-空行使用" class="headerlink" title="空格/空行使用"></a>空格/空行使用</h2><ol>
 <li>相关代码放在一起，不相关代码用一个空行间隔</li>
 <li>赋值，比较等表达式符号两边各添加一个空格</li>

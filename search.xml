@@ -1,62 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Windows零售版转换成vol批量可激活版</title>
-    <url>/2020-07-windows-version-change-to-vol.html</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>如果没有购买正版Windows，或者不想用电脑厂商出厂带的OEM版「一般是家庭版，有些功能没有」，重装后我们一般会找个KMS激活，但如果装的时候没选好版本，可能用KMS工具激活的时候会提示该系统非vl版，激活失败之类的。<br><img src="../images/windows_vl_kms.png"></p>
-<h1 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h1><p>如果装的系统不是 <code>VL</code> 版本，此时你也许会重新下载个 <code>VL</code> 版重装，这当然是可以的。</p>
-<p>另外一方面，我们也不需要这么麻烦，因为系统镜像本身就大同小异，只是里面一两个配置不一样而已，我们只需要 用 <code>DISM</code> 命令将已经装好的系统更改为 <code>VOL</code> 版本，当然也可以用这个命令从 <code>Home</code> 升级为 <code>Professional</code> 。</p>
-<h2 id="确认已安装的版本"><a href="#确认已安装的版本" class="headerlink" title="确认已安装的版本"></a>确认已安装的版本</h2><p>在CMD或者Powershell中，用下面的命令可以知道自己当前已经安装的是什么版本：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">DISM &#x2F;online &#x2F;Get-CurrentEdition</span><br></pre></td></tr></table></figure>
-
-<p>运行结果是这样：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Windows PowerShell</span><br><span class="line">Copyright (C) 2012 Microsoft Corporation. All rights reserved.</span><br><span class="line"></span><br><span class="line">PS C:\Users\Administrator&gt; DISM &#x2F;online &#x2F;Get-CurrentEdition</span><br><span class="line"></span><br><span class="line">Deployment Image Servicing and Management tool</span><br><span class="line">Version: 6.2.9200.22807</span><br><span class="line"></span><br><span class="line">Image Version: 6.2.9200.22807</span><br><span class="line"></span><br><span class="line">Current edition is:</span><br><span class="line"></span><br><span class="line">Current Edition : ServerStandard</span><br><span class="line"></span><br><span class="line">The operation completed successfully.</span><br></pre></td></tr></table></figure>
-
-<p>以及可以升级到什么版本</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">DISM &#x2F;online &#x2F;Get-TargetEditions</span><br></pre></td></tr></table></figure>
-
-<h2 id="准备秘钥"><a href="#准备秘钥" class="headerlink" title="准备秘钥"></a>准备秘钥</h2><p>密钥可以网上搜索，找个自己已安装版本对应的密钥，可以到微软官网 <a href="https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-R2-and-2012/jj612867(v=ws.11)">Appendix A: KMS Client Setup Keys</a> 去找个，因为反正目的都是为了KMS激活。</p>
-<p>以自己vps里装的一个为例，通过上面的命令可知版本是 <code>Windows Server 2012 Server Standard</code> ，那么从上面的官网上可以找到可用密钥为：<code>XC9B7-NBPP2-83J2H-RHMBY-92BT4</code></p>
-<h2 id="转换成VL版"><a href="#转换成VL版" class="headerlink" title="转换成VL版"></a>转换成VL版</h2><p>转换命令：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">DISM &#x2F;online &#x2F;Set-Edition:&lt;edition ID&gt; &#x2F;ProductKey:XXXXX-XXXXX-XXXXX-XXXXX-XXXXX &#x2F;AcceptEula </span><br></pre></td></tr></table></figure>
-<p><code>Edition ID</code> 就是前文得到的那个版本 <code>ServerStandard</code>，<code>ProductKey</code> 后面把序列号填上去就行，这个方法可以解决 <code>slmgr /ipk</code> 命令无法安装 <code>VL</code> 密钥的情况，也适用于 <code>Standard</code> 转 <code>DataCenter</code></p>
-<p>按实际情况组合完为：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">DISM &#x2F;online &#x2F;Set-Edition:ServerStandard &#x2F;ProductKey:XC9B7-NBPP2-83J2H-RHMBY-92BT4 &#x2F;AcceptEula</span><br></pre></td></tr></table></figure>
-
-<p>命令执行完会要求重启，按要求重启系统。</p>
-<h1 id="系统激活"><a href="#系统激活" class="headerlink" title="系统激活"></a>系统激活</h1><p>转换为 <code>VL</code> 版后，再去激活系统就简单多了，市面上几乎所有的工具都能一键激活，KMS工具激活就不提了，都在界面上，自行点点就激活完成了，不想用工具的可以用以下命令：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#设置kms服务器</span><br><span class="line">slmgr &#x2F;skms kms.03k.org</span><br><span class="line">#自动激活</span><br><span class="line">slmgr &#x2F;ato</span><br></pre></td></tr></table></figure>
-
-<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><ol>
-<li><a href="https://www.cnblogs.com/zjoch/archive/2013/04/02/2995250.html">Windows Server 2012从Evaluation版转成正式版</a></li>
-<li><a href="https://03k.org/kms.html">KMS服务~一句命令激活windows/office</a></li>
-</ol>
-]]></content>
-      <categories>
-        <category>玩系统</category>
-      </categories>
-      <tags>
-        <tag>Windows</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>解决“Peer fingerprint did not match”错误提示</title>
     <url>/2020-05-php-error-peer-fingerprint-did-not-match.html</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>有个PHP网站跑的好好的，闲来无事把宝塔面板里的软件升级了一把，系统里也update了一回。然后，发现网站功能不正常了，定时任务执行完成没有效果，线上生产环境，思来想去不知道哪里出错了，慌得一逼，还好最后解决得有惊无险！</p>
 <h1 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h1><p>用系统定时任务设置了个PHP任务，但任务结果迟迟不对，但 <code>tail -f /var/log/cron</code> 可见系统任务正常执行。</p>
 <h1 id="排查"><a href="#排查" class="headerlink" title="排查"></a>排查</h1><p>因为是线上环境，不敢冒然动手，只能一点点试探。因为升级过环境，所以也不可能把所有软件都想一遍，既然是PHP任务，那第一个想到的就是PHP程序出问题了。<br>检查下来PHP程序功能也没什么问题，除了定时任务执行结果不对，索性手动运行了一把：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 先切到网站目录，然后执行</span><br><span class="line">php artisan schedule:run</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 先切到网站目录，然后执行</span><br><span class="line">php artisan schedule:run</span><br></pre></td></tr></table></figure>
 
 <p>结果显示：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[Composer\Downloader\TransportException] Peer fingerprint did not match</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[Composer\Downloader\TransportException] Peer fingerprint did not match</span><br></pre></td></tr></table></figure>
 
 <p>这个错误Google一把，人家说是版本不匹配，再去看看自己安装的PHP版本，<code>7.2.31</code> 并没有错，但系统内用 <code>php -v</code> 却是 <code>5.6.4</code> ，版本不符，这个版本并没有安装过，也不知道怎么来的，不知道是删库塔更新错误还是 <code>yum update</code> 的时候哪里带来的，总归知道原因了。</p>
 <h1 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h1><h2 id="宝塔面板处理"><a href="#宝塔面板处理" class="headerlink" title="宝塔面板处理"></a>宝塔面板处理</h2><p>在宝塔面板上可以直接切换PHP命令行版本的功能：<code>宝塔面板》网站》PHP命令行版本</code> ，点击选择你要的版本即可。</p>
 <h2 id="系统内处理"><a href="#系统内处理" class="headerlink" title="系统内处理"></a>系统内处理</h2><p>如果没有删库塔上这个功能入口，也可以登录系统自行更改：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#找到PHP程序位置</span><br><span class="line">whereis php</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#找到PHP程序位置</span><br><span class="line">whereis php</span><br></pre></td></tr></table></figure>
 
 <p>会返回PHP路径，一般都在 <code>/usr/bin/php</code> ，然后把这个入口链接到你安装的PHP实际路径即可，如删库塔安装的PHP位置为：<code>/www/server/php/72/bin/php</code> ，那么，执行以下命令：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ln -sf &#x2F;www&#x2F;server&#x2F;php&#x2F;72&#x2F;bin&#x2F;php &#x2F;usr&#x2F;bin&#x2F;php</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ln -sf /www/server/php/72/bin/php /usr/bin/php</span><br></pre></td></tr></table></figure>
 
 <p>软链接创建完成后，再次 <code>php -v</code> 检查版本应该就正确了，此时PHP任务执行功能正常，故障得以消除。</p>
 ]]></content>
@@ -101,26 +62,42 @@
       </tags>
   </entry>
   <entry>
-    <title>转：php源码随机输出某个目录下的图片API</title>
-    <url>/2020-09-php-image-api.html</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>搞了一大批美女图，想给网友过过眼，写个php源码随机输出某一个目录下的图片，可用于随机图片API接口。</p>
-<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><p>把下面的代码保存为 <code>imgapi.php</code> ：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">header(&#39;Content-type: image&#x2F;jpg&#39;);</span><br><span class="line">$img_array &#x3D; glob(&quot;.&#x2F;*.&#123;gif,jpg,png&#125;&quot;,GLOB_BRACE);</span><br><span class="line">$img &#x3D; array_rand($img_array);</span><br><span class="line">$image &#x3D; file_get_contents($img_array[$img]);</span><br><span class="line">echo $image;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
-<p>保存就可以调用这个接口。</p>
-<h1 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h1><p>调用方式为：<code>域名/imgapi.php</code>，图片目录为 <code>imaapi.php</code> 同级目录。</p>
-<p>也可以自定义图片的目录，把下面代码：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$img_array &#x3D; glob(&quot;.&#x2F;*.&#123;gif,jpg,png&#125;&quot;,GLOB_BRACE);</span><br></pre></td></tr></table></figure>
+    <title>Windows零售版转换成vol批量可激活版</title>
+    <url>/2020-07-windows-version-change-to-vol.html</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>如果没有购买正版Windows，或者不想用电脑厂商出厂带的OEM版「一般是家庭版，有些功能没有」，重装后我们一般会找个KMS激活，但如果装的时候没选好版本，可能用KMS工具激活的时候会提示该系统非vl版，激活失败之类的。<br><img src="../images/windows_vl_kms.png" loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'></p>
+<h1 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h1><p>如果装的系统不是 <code>VL</code> 版本，此时你也许会重新下载个 <code>VL</code> 版重装，这当然是可以的。</p>
+<p>另外一方面，我们也不需要这么麻烦，因为系统镜像本身就大同小异，只是里面一两个配置不一样而已，我们只需要 用 <code>DISM</code> 命令将已经装好的系统更改为 <code>VOL</code> 版本，当然也可以用这个命令从 <code>Home</code> 升级为 <code>Professional</code> 。</p>
+<h2 id="确认已安装的版本"><a href="#确认已安装的版本" class="headerlink" title="确认已安装的版本"></a>确认已安装的版本</h2><p>在CMD或者Powershell中，用下面的命令可以知道自己当前已经安装的是什么版本：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">DISM /online /Get-CurrentEdition</span><br></pre></td></tr></table></figure>
 
-<p>改为以下代码，<code>img</code> 是图片目录名，可以随意更改：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$img_array &#x3D; glob(&quot;.&#x2F;img&#x2F;*.&#123;gif,jpg,png&#125;&quot;,GLOB_BRACE);</span><br></pre></td></tr></table></figure>
-<p>这样就可以调用 <code>img</code> 目录下的图片了。</p>
-<p><a href="https://www.vmitu.com/webdaima/2020032051.html">原文链接</a></p>
+<p>运行结果是这样：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Windows PowerShell</span><br><span class="line">Copyright (C) 2012 Microsoft Corporation. All rights reserved.</span><br><span class="line"></span><br><span class="line">PS C:\Users\Administrator&gt; DISM /online /Get-CurrentEdition</span><br><span class="line"></span><br><span class="line">Deployment Image Servicing and Management tool</span><br><span class="line">Version: 6.2.9200.22807</span><br><span class="line"></span><br><span class="line">Image Version: 6.2.9200.22807</span><br><span class="line"></span><br><span class="line">Current edition is:</span><br><span class="line"></span><br><span class="line">Current Edition : ServerStandard</span><br><span class="line"></span><br><span class="line">The operation completed successfully.</span><br></pre></td></tr></table></figure>
+
+<p>以及可以升级到什么版本</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">DISM /online /Get-TargetEditions</span><br></pre></td></tr></table></figure>
+
+<h2 id="准备秘钥"><a href="#准备秘钥" class="headerlink" title="准备秘钥"></a>准备秘钥</h2><p>密钥可以网上搜索，找个自己已安装版本对应的密钥，可以到微软官网 <a href="https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-R2-and-2012/jj612867(v=ws.11)">Appendix A: KMS Client Setup Keys</a> 去找个，因为反正目的都是为了KMS激活。</p>
+<p>以自己vps里装的一个为例，通过上面的命令可知版本是 <code>Windows Server 2012 Server Standard</code> ，那么从上面的官网上可以找到可用密钥为：<code>XC9B7-NBPP2-83J2H-RHMBY-92BT4</code></p>
+<h2 id="转换成VL版"><a href="#转换成VL版" class="headerlink" title="转换成VL版"></a>转换成VL版</h2><p>转换命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">DISM /online /Set-Edition:&lt;edition ID&gt; /ProductKey:XXXXX-XXXXX-XXXXX-XXXXX-XXXXX /AcceptEula </span><br></pre></td></tr></table></figure>
+<p><code>Edition ID</code> 就是前文得到的那个版本 <code>ServerStandard</code>，<code>ProductKey</code> 后面把序列号填上去就行，这个方法可以解决 <code>slmgr /ipk</code> 命令无法安装 <code>VL</code> 密钥的情况，也适用于 <code>Standard</code> 转 <code>DataCenter</code></p>
+<p>按实际情况组合完为：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">DISM /online /Set-Edition:ServerStandard /ProductKey:XC9B7-NBPP2-83J2H-RHMBY-92BT4 /AcceptEula</span><br></pre></td></tr></table></figure>
+
+<p>命令执行完会要求重启，按要求重启系统。</p>
+<h1 id="系统激活"><a href="#系统激活" class="headerlink" title="系统激活"></a>系统激活</h1><p>转换为 <code>VL</code> 版后，再去激活系统就简单多了，市面上几乎所有的工具都能一键激活，KMS工具激活就不提了，都在界面上，自行点点就激活完成了，不想用工具的可以用以下命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#设置kms服务器</span><br><span class="line">slmgr /skms kms.03k.org</span><br><span class="line">#自动激活</span><br><span class="line">slmgr /ato</span><br></pre></td></tr></table></figure>
+
+<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><ol>
+<li><a href="https://www.cnblogs.com/zjoch/archive/2013/04/02/2995250.html">Windows Server 2012从Evaluation版转成正式版</a></li>
+<li><a href="https://03k.org/kms.html">KMS服务~一句命令激活windows/office</a></li>
+</ol>
 ]]></content>
       <categories>
-        <category>学编程</category>
+        <category>玩系统</category>
       </categories>
       <tags>
-        <tag>混技能</tag>
+        <tag>Windows</tag>
       </tags>
   </entry>
   <entry>
@@ -128,9 +105,9 @@
     <url>/2020-10-aardio-notes-02.html</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>这里的基础规范不包括所有的语法，只是作为一个初学者注意到的可能会混淆的概念，会有出错的细节做个记录，以及为今后养成一些固定格式习惯之用，各种语法规范请参见aardio帮助文档即可。</p>
 <h1 id="基本规范"><a href="#基本规范" class="headerlink" title="基本规范"></a>基本规范</h1><h2 id="变量命名规则"><a href="#变量命名规则" class="headerlink" title="变量命名规则"></a>变量命名规则</h2><p>推荐用小驼峰命名法，即小写在前大写在后，如：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var robotName &#x3D; &quot;QQ机器人&quot;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">var robotName = &quot;QQ机器人&quot;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <h2 id="语句判别"><a href="#语句判别" class="headerlink" title="语句判别"></a>语句判别</h2><p>每行一句，以 <code>;</code> 结尾，不以换行为判断。实际上 <code>;</code> 不写也没关系，aardio会检查语句的完整性。为代码统一规范美观，建议语句结尾带上 <code>;</code> 结尾，如：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">if(mainForm)&#123;</span><br><span class="line">  mainForm.text &#x3D; &quot;测试&quot;;</span><br><span class="line">  mainForm.show();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">if(mainForm)&#123;</span><br><span class="line">  mainForm.text = &quot;测试&quot;;</span><br><span class="line">  mainForm.show();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="空格-空行使用"><a href="#空格-空行使用" class="headerlink" title="空格/空行使用"></a>空格/空行使用</h2><ol>
 <li>相关代码放在一起，不相关代码用一个空行间隔</li>
 <li>赋值，比较等表达式符号两边各添加一个空格</li>
@@ -162,6 +139,29 @@
       </tags>
   </entry>
   <entry>
+    <title>转：php源码随机输出某个目录下的图片API</title>
+    <url>/2020-09-php-image-api.html</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>搞了一大批美女图，想给网友过过眼，写个php源码随机输出某一个目录下的图片，可用于随机图片API接口。</p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><p>把下面的代码保存为 <code>imgapi.php</code> ：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">header(&#x27;Content-type: image/jpg&#x27;);</span><br><span class="line">$img_array = glob(&quot;./*.&#123;gif,jpg,png&#125;&quot;,GLOB_BRACE);</span><br><span class="line">$img = array_rand($img_array);</span><br><span class="line">$image = file_get_contents($img_array[$img]);</span><br><span class="line">echo $image;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p>保存就可以调用这个接口。</p>
+<h1 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h1><p>调用方式为：<code>域名/imgapi.php</code>，图片目录为 <code>imaapi.php</code> 同级目录。</p>
+<p>也可以自定义图片的目录，把下面代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$img_array = glob(&quot;./*.&#123;gif,jpg,png&#125;&quot;,GLOB_BRACE);</span><br></pre></td></tr></table></figure>
+
+<p>改为以下代码，<code>img</code> 是图片目录名，可以随意更改：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$img_array = glob(&quot;./img/*.&#123;gif,jpg,png&#125;&quot;,GLOB_BRACE);</span><br></pre></td></tr></table></figure>
+<p>这样就可以调用 <code>img</code> 目录下的图片了。</p>
+<p><a href="https://www.vmitu.com/webdaima/2020032051.html">原文链接</a></p>
+]]></content>
+      <categories>
+        <category>学编程</category>
+      </categories>
+      <tags>
+        <tag>混技能</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>网页模板 pug 基本语法</title>
     <url>/2020-12-hexo-pug-notes.html</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>pug 原名 <code>jade</code> ，因版权问题更名为 <code>pug</code> ，即哈巴狗。与 hexo 默认模块 <code>ejs</code> 一样，pug 也是一个模板引擎，可用于快速的网站开发，当然也可以用于静态博客网站的设计。本站点现时所用主题 manupassant 也使用了 <code>pug</code> 。</p>
@@ -170,75 +170,75 @@
 
 <h1 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h1><p>pug 不同于 html ，前者不需要标签的开和闭，如 html 的 <code>&lt;p&gt;Demo&lt;/p&gt;</code> ，在 pug 使用 <code>p Demo</code> 即可。</p>
 <h2 id="缩进"><a href="#缩进" class="headerlink" title="缩进"></a>缩进</h2><p>pug 对空格敏感，有点类似 python 对制表符tab敏感。pug 使用空格作为缩进符，当然用 <code>soft tab</code> 也可行。同一级标签需保证左对齐。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">div</span><br><span class="line">    p Hello, world!</span><br><span class="line">    p Hello, pug.</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">div</span><br><span class="line">    p Hello, world!</span><br><span class="line">    p Hello, pug.</span><br></pre></td></tr></table></figure>
 
 <p>渲染结果如下：</p>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>Hellow, world!<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>Hello, pug.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h2><p>pug 使用 <code>//-</code> 或 <code>//</code> 对代码进行注释，前者注释内容不出现在渲染后的 html 文件中，后者反之。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;- html中不包含此行</span><br><span class="line">&#x2F;&#x2F; html中会包含此行</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">//- html中不包含此行</span><br><span class="line">// html中会包含此行</span><br></pre></td></tr></table></figure>
 
 <h2 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h2><p>pug 将标签属性存放于括号 <code>()</code> 内，多个属性之间以 <code>逗号</code> 或 <code>空格</code> 分隔。此外，对于标签的 <code>id</code> 和 <code>class</code> ，pug 使用 <code>#</code> 紧跟标签 <code>id</code> ,使用 <code>.</code> 紧跟标签 <code>class</code> ，可以同时设置多个 <code>class</code> 。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">h1#title Test title</span><br><span class="line">img#name.class1.class2(src&#x3D;&quot;&#x2F;test.png&quot; alt&#x3D;&quot;test&quot;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">h1#title Test title</span><br><span class="line">img#name.class1.class2(src=&quot;/test.png&quot; alt=&quot;test&quot;)</span><br></pre></td></tr></table></figure>
 
 <p>渲染结果如下：</p>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h1</span> <span class="attr">id</span>=<span class="string">&quot;title&quot;</span>&gt;</span>Test title<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">id</span>=<span class="string">&quot;name&quot;</span> <span class="attr">class</span>=<span class="string">&quot;class1 class2&quot;</span> <span class="attr">src</span>=<span class="string">&quot;/test.png&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;test&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="包含"><a href="#包含" class="headerlink" title="包含"></a>包含</h2><p>为了方便代码复用，pug 提供了 <code>include</code> 包含功能，以下代码会将 <code>_partial</code> 目录下的 <code>head.pug</code> 文件内容包含到当前调用的位置。有点 C/C++ 中内联函数的意思。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">doctype html</span><br><span class="line">html(lang&#x3D;&#39;en&#39;)</span><br><span class="line">    include _partial&#x2F;head.pug</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">doctype html</span><br><span class="line">html(lang=&#x27;en&#x27;)</span><br><span class="line">    include _partial/head.pug</span><br></pre></td></tr></table></figure>
 
 <h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2><p>下面是一个简单的 <code>base</code> 模板，通过 <code>block</code> 定义了页面头部 <code>head</code> 和内容 <code>body</code> 。块 <code>block</code> 有点类似 C/C++ 的抽象函数，需要在继承者中完成定义，填充具体内容。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;- base.pug</span><br><span class="line">html</span><br><span class="line">    head</span><br><span class="line">        block title</span><br><span class="line">    body</span><br><span class="line">        block content</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">//- base.pug</span><br><span class="line">html</span><br><span class="line">    head</span><br><span class="line">        block title</span><br><span class="line">    body</span><br><span class="line">        block content</span><br></pre></td></tr></table></figure>
 
 <p>以下文件使用 <code>extends</code> 继承以上模板，通过 <code>block</code> 覆盖或替换原有块 <code>block</code> 。当然，继承者也可以在原有基础上继续扩展。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;- index.pug</span><br><span class="line">extends base.pug</span><br><span class="line"></span><br><span class="line">block title</span><br><span class="line">    title &quot;Test title&quot;</span><br><span class="line"></span><br><span class="line">block content</span><br><span class="line">    h1 Hello world!</span><br><span class="line">    block article</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">//- index.pug</span><br><span class="line">extends base.pug</span><br><span class="line"></span><br><span class="line">block title</span><br><span class="line">    title &quot;Test title&quot;</span><br><span class="line"></span><br><span class="line">block content</span><br><span class="line">    h1 Hello world!</span><br><span class="line">    block article</span><br></pre></td></tr></table></figure>
 
 <h2 id="定义变量"><a href="#定义变量" class="headerlink" title="定义变量"></a>定义变量</h2><p>pug中通过 <code>- var name = value</code> 的形式定义变量</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">- var intData &#x3D; 100</span><br><span class="line">- var boolData &#x3D; false</span><br><span class="line">- var stringData &#x3D; &#39;Test&#39;</span><br><span class="line">p.int&#x3D; intData</span><br><span class="line">p.bool&#x3D; boolData</span><br><span class="line">p.stringData&#x3D; stringData</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">- var intData = 100</span><br><span class="line">- var boolData = false</span><br><span class="line">- var stringData = &#x27;Test&#x27;</span><br><span class="line">p.int= intData</span><br><span class="line">p.bool= boolData</span><br><span class="line">p.stringData= stringData</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>需注意的是，在引用变量时，需要在引用位置加上=号，否则会默认将变量名当成普通字符串使用。</p>
 </blockquote>
 <p>如果想要将变量与其它字符串常量或是变量连接在一起，就不能用等号了，而是应该用 <code>#&#123;&#125;</code> ，该符号会对大括号内的变量进行求值和转义，最终得到渲染输出的内容。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">- var girl &#x3D; &#39;Lily&#39;</span><br><span class="line">- var boy &#x3D; &#39;Jack&#39;</span><br><span class="line">p #&#123;girl&#125; is so beautiful!</span><br><span class="line">p And #&#123;boy&#125; is handsome.</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">- var girl = &#x27;Lily&#x27;</span><br><span class="line">- var boy = &#x27;Jack&#x27;</span><br><span class="line">p #&#123;girl&#125; is so beautiful!</span><br><span class="line">p And #&#123;boy&#125; is handsome.</span><br></pre></td></tr></table></figure>
 
 <h2 id="条件结构"><a href="#条件结构" class="headerlink" title="条件结构"></a>条件结构</h2><p>pug 的条件语句与其它语言类似，均是如下这般：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">- var A &#x3D; &#123;value: &#39;Test&#39;&#125;</span><br><span class="line">- var B &#x3D; true</span><br><span class="line">if A.value</span><br><span class="line">    p&#x3D; A.value</span><br><span class="line">else if B</span><br><span class="line">    p&#x3D; B</span><br><span class="line">else</span><br><span class="line">    p nothing</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">- var A = &#123;value: &#x27;Test&#x27;&#125;</span><br><span class="line">- var B = true</span><br><span class="line">if A.value</span><br><span class="line">    p= A.value</span><br><span class="line">else if B</span><br><span class="line">    p= B</span><br><span class="line">else</span><br><span class="line">    p nothing</span><br></pre></td></tr></table></figure>
 
 <h2 id="迭代"><a href="#迭代" class="headerlink" title="迭代"></a>迭代</h2><p>pug 中使用 <code>each</code> 和 <code>while</code> 实现循环迭代，<code>each</code> 可以返回当前所在项的索引值，默认从 <code>0</code> 开始计数。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;- each</span><br><span class="line">ol</span><br><span class="line">    each item in [&#39;Sun&#39;, &#39;Mon&#39;, &#39;Tus&#39;, &#39;Wen&#39;, &#39;Thu&#39;, &#39;Fri&#39;, &#39;Sat&#39;]</span><br><span class="line">        li&#x3D; item</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;- get index of each</span><br><span class="line">- var week &#x3D; [&#39;Sun&#39;, &#39;Mon&#39;, &#39;Tus&#39;, &#39;Wen&#39;, &#39;Thu&#39;, &#39;Fri&#39;, &#39;Sat&#39;]</span><br><span class="line">ol</span><br><span class="line">    each item, index in week</span><br><span class="line">        li&#x3D; index + &#39;:&#39; + item</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">//- each</span><br><span class="line">ol</span><br><span class="line">    each item in [&#x27;Sun&#x27;, &#x27;Mon&#x27;, &#x27;Tus&#x27;, &#x27;Wen&#x27;, &#x27;Thu&#x27;, &#x27;Fri&#x27;, &#x27;Sat&#x27;]</span><br><span class="line">        li= item</span><br><span class="line"></span><br><span class="line">//- get index of each</span><br><span class="line">- var week = [&#x27;Sun&#x27;, &#x27;Mon&#x27;, &#x27;Tus&#x27;, &#x27;Wen&#x27;, &#x27;Thu&#x27;, &#x27;Fri&#x27;, &#x27;Sat&#x27;]</span><br><span class="line">ol</span><br><span class="line">    each item, index in week</span><br><span class="line">        li= index + &#x27;:&#x27; + item</span><br></pre></td></tr></table></figure>
 <p>渲染成 html 后：</p>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ol</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>Sun<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>Mon<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>Tus<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>Wen<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>Thu<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>Fri<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>Sat<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ol</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">ol</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>0:Sun<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>1:Mon<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>2:Tus<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>3:Wen<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>4:Thu<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>5:Fri<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>6:Sat<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ol</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p><code>while</code> 调用方式如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;- while</span><br><span class="line">- var day &#x3D; 1</span><br><span class="line">ul</span><br><span class="line">    while day &lt; 7</span><br><span class="line">        li&#x3D; day++</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">//- while</span><br><span class="line">- var day = 1</span><br><span class="line">ul</span><br><span class="line">    while day &lt; 7</span><br><span class="line">        li= day++</span><br></pre></td></tr></table></figure>
 
 <h2 id="Minix"><a href="#Minix" class="headerlink" title="Minix"></a>Minix</h2><p><code>mixin</code> 名曰混入，类似其它编程语言中的函数，也是为了代码复用，可带参数或不带参数，定义方式如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mixin menu-item(href, name)</span><br><span class="line">    li</span><br><span class="line">        span.dot ●</span><br><span class="line">        a(href&#x3D;href)&#x3D; name</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mixin menu-item(href, name)</span><br><span class="line">    li</span><br><span class="line">        span.dot ●</span><br><span class="line">        a(href=href)= name</span><br></pre></td></tr></table></figure>
 <p>其中，<code>menu-item</code> 为调用时所用名称，可认为是函数名，<code>href</code> 及 <code>name</code> 是参数。同上定义变量所说，<code>a(href=href)= name</code> 中第二个 <code>=</code> 是为了将后面的 <code>name</code> 当作参数来处理，而不是当作字符串 <code>&quot;name&quot;</code> 来处理。</p>
 <p>调用 <code>mixin</code> 定义的代码块，需通过 <code>+</code> 号紧跟 <code>mixin</code> 名称及参数:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">+menu-item(&#39;&#x2F;Archives&#39;,&#39;Archives&#39;)</span><br><span class="line">+menu-item(&#39;&#x2F;About&#39;,&#39;About&#39;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">+menu-item(&#x27;/Archives&#x27;,&#x27;Archives&#x27;)</span><br><span class="line">+menu-item(&#x27;/About&#x27;,&#x27;About&#x27;)</span><br></pre></td></tr></table></figure>
 <p><code>mixin</code> 之所以称为混入，是因为其语法不局限于函数调用，在 <code>mixin</code> 可以使用块 <code>block</code></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mixin print(post)</span><br><span class="line">    if block</span><br><span class="line">        block</span><br><span class="line">    else</span><br><span class="line">        p&#x3D; post</span><br><span class="line"></span><br><span class="line">+print(&quot;no block&quot;)</span><br><span class="line">+print(&quot;&quot;)</span><br><span class="line">    div.box</span><br><span class="line">        p this is the content of block</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mixin print(post)</span><br><span class="line">    if block</span><br><span class="line">        block</span><br><span class="line">    else</span><br><span class="line">        p= post</span><br><span class="line"></span><br><span class="line">+print(&quot;no block&quot;)</span><br><span class="line">+print(&quot;&quot;)</span><br><span class="line">    div.box</span><br><span class="line">        p this is the content of block</span><br></pre></td></tr></table></figure>
 <p>对应 html 代码：</p>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>no block<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;box&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>this is the content of block<span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><blockquote>
 <p>注意以下 <code>pug</code> 语句中第一行的 <code>.</code> 号。</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">script(type&#x3D;&#39;text&#x2F;javascript&#39;).</span><br><span class="line">    var data &#x3D; &quot;Test&quot;</span><br><span class="line">    var enable &#x3D; true</span><br><span class="line">    if enable</span><br><span class="line">        console.log(data)</span><br><span class="line">    else</span><br><span class="line">        console.log(&#39;nothing&#39;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">script(type=&#x27;text/javascript&#x27;).</span><br><span class="line">    var data = &quot;Test&quot;</span><br><span class="line">    var enable = true</span><br><span class="line">    if enable</span><br><span class="line">        console.log(data)</span><br><span class="line">    else</span><br><span class="line">        console.log(&#x27;nothing&#x27;)</span><br></pre></td></tr></table></figure>
 
 <p>对应的 JS 代码如下：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&lt;script type=<span class="string">&#x27;text/javascript&#x27;</span>&gt;</span><br><span class="line">    <span class="keyword">var</span> data = <span class="string">&quot;Test&quot;</span></span><br><span class="line">    <span class="keyword">var</span> enable = <span class="literal">true</span></span><br><span class="line">    <span class="keyword">if</span> enable</span><br><span class="line">        <span class="built_in">console</span>.log(data)</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;nothing&#x27;</span>)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&lt;script type=<span class="string">&#x27;text/javascript&#x27;</span>&gt;</span><br><span class="line">    <span class="keyword">var</span> data = <span class="string">&quot;Test&quot;</span></span><br><span class="line">    <span class="keyword">var</span> enable = <span class="literal">true</span></span><br><span class="line">    <span class="keyword">if</span> enable</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(data)</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;nothing&#x27;</span>)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
 
 <p>对于简单脚本，使用 pug 尚可，复杂的还是单独写到 <code>.js</code> 文件中，然后通过 pug 引用方便一些，引用方式如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">script(type&#x3D;&#39;text&#x2F;javascript&#39;, src&#x3D;&#39;&#x2F;path&#x2F;to&#x2F;js&#39;)</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;- with hexo function url_for</span><br><span class="line">script(type&#x3D;&#39;text&#x2F;javascript&#39;, src&#x3D;url_for(theme.js) + &#39;&#x2F;ready.js&#39;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">script(type=&#x27;text/javascript&#x27;, src=&#x27;/path/to/js&#x27;)</span><br><span class="line"></span><br><span class="line">//- with hexo function url_for</span><br><span class="line">script(type=&#x27;text/javascript&#x27;, src=url_for(theme.js) + &#x27;/ready.js&#x27;)</span><br></pre></td></tr></table></figure>
 <h1 id="hexo-相关"><a href="#hexo-相关" class="headerlink" title="hexo 相关"></a>hexo 相关</h1><p>在 hexo 主题中使用 pug 时，可以通过使用 hexo 提供的全局变量 <code>config</code> ， <code>theme</code> 来分别调用博客根目录下 <code>_config.yml</code> 文件中的参数以及主题根目录下 <code>_config.yml</code> 文件中的参数。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;- blog config</span><br><span class="line">p&#x3D; config.description</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;- theme config</span><br><span class="line">p&#x3D; theme.title</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">//- blog config</span><br><span class="line">p= config.description</span><br><span class="line"></span><br><span class="line">//- theme config</span><br><span class="line">p= theme.title</span><br></pre></td></tr></table></figure>
 <p>当然，pug 中可以直接使用 hexo 提供的其它全局变量及辅助函数，使用方法详见 hexo 的文档。</p>
-<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;- head.pug</span><br><span class="line">head</span><br><span class="line">    meta(http-equiv&#x3D;&#39;content-type&#39;, content&#x3D;&#39;text&#x2F;html; charset&#x3D;utf-8&#39;)</span><br><span class="line">    meta(content&#x3D;&#39;width&#x3D;device-width, initial-scale&#x3D;1.0, maximum-scale&#x3D;1.0, user-scalable&#x3D;0&#39;, name&#x3D;&#39;viewport&#39;)</span><br><span class="line">    meta(content&#x3D;&#39;yes&#39;, name&#x3D;&#39;apple-mobile-web-app-capable&#39;)</span><br><span class="line">    meta(content&#x3D;&#39;black-translucent&#39;, name&#x3D;&#39;apple-mobile-web-app-status-bar-style&#39;)</span><br><span class="line">    meta(content&#x3D;&#39;telephone&#x3D;no&#39;, name&#x3D;&#39;format-detection&#39;)</span><br><span class="line">    meta(name&#x3D;&#39;description&#39;, content&#x3D;config.description)</span><br><span class="line">    block title</span><br><span class="line">    link(rel&#x3D;&#39;stylesheet&#39;, type&#x3D;&#39;text&#x2F;css&#39;, href&#x3D;url_for(theme.css) + &#39;&#x2F;style.css&#39; + &#39;?v&#x3D;&#39; + theme.version)</span><br><span class="line">    link(rel&#x3D;&#39;Shortcut Icon&#39;, type&#x3D;&#39;image&#x2F;x-icon&#39;, href&#x3D;url_for(&#39;favicon.png&#39;))</span><br><span class="line">    script(type&#x3D;&#39;text&#x2F;javascript&#39;, src&#x3D;&#39;&#x2F;&#x2F;cdn.bootcss.com&#x2F;jquery&#x2F;3.3.1&#x2F;jquery.min.js&#39;)</span><br><span class="line">    block more</span><br></pre></td></tr></table></figure>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">//- head.pug</span><br><span class="line">head</span><br><span class="line">    meta(http-equiv=&#x27;content-type&#x27;, content=&#x27;text/html; charset=utf-8&#x27;)</span><br><span class="line">    meta(content=&#x27;width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0&#x27;, name=&#x27;viewport&#x27;)</span><br><span class="line">    meta(content=&#x27;yes&#x27;, name=&#x27;apple-mobile-web-app-capable&#x27;)</span><br><span class="line">    meta(content=&#x27;black-translucent&#x27;, name=&#x27;apple-mobile-web-app-status-bar-style&#x27;)</span><br><span class="line">    meta(content=&#x27;telephone=no&#x27;, name=&#x27;format-detection&#x27;)</span><br><span class="line">    meta(name=&#x27;description&#x27;, content=config.description)</span><br><span class="line">    block title</span><br><span class="line">    link(rel=&#x27;stylesheet&#x27;, type=&#x27;text/css&#x27;, href=url_for(theme.css) + &#x27;/style.css&#x27; + &#x27;?v=&#x27; + theme.version)</span><br><span class="line">    link(rel=&#x27;Shortcut Icon&#x27;, type=&#x27;image/x-icon&#x27;, href=url_for(&#x27;favicon.png&#x27;))</span><br><span class="line">    script(type=&#x27;text/javascript&#x27;, src=&#x27;//cdn.bootcss.com/jquery/3.3.1/jquery.min.js&#x27;)</span><br><span class="line">    block more</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;- base.pug</span><br><span class="line">doctype html</span><br><span class="line">html(lang&#x3D;&#39;en&#39;)</span><br><span class="line">    include _partial&#x2F;head.pug</span><br><span class="line">    block more</span><br><span class="line">        link(rel&#x3D;&#39;stylesheet&#39;, type&#x3D;&#39;text&#x2F;css&#39;, href&#x3D;url_for(theme.plugins) + &#39;&#x2F;prettify&#x2F;doxy.css&#39;)</span><br><span class="line">        script(type&#x3D;&#39;text&#x2F;javascript&#39;, src&#x3D;url_for(theme.js) + &#39;&#x2F;ready.js&#39; + &#39;?v&#x3D;&#39; + theme.version, async)</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F;- body</span><br><span class="line">    body: #container.box</span><br><span class="line">        .h-wrapper</span><br><span class="line">            include _partial&#x2F;nav-menu.pug</span><br><span class="line">        &#x2F;&#x2F; article content</span><br><span class="line">        block content</span><br><span class="line"></span><br><span class="line">        include _partial&#x2F;footer.pug</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">//- base.pug</span><br><span class="line">doctype html</span><br><span class="line">html(lang=&#x27;en&#x27;)</span><br><span class="line">    include _partial/head.pug</span><br><span class="line">    block more</span><br><span class="line">        link(rel=&#x27;stylesheet&#x27;, type=&#x27;text/css&#x27;, href=url_for(theme.plugins) + &#x27;/prettify/doxy.css&#x27;)</span><br><span class="line">        script(type=&#x27;text/javascript&#x27;, src=url_for(theme.js) + &#x27;/ready.js&#x27; + &#x27;?v=&#x27; + theme.version, async)</span><br><span class="line">    </span><br><span class="line">    //- body</span><br><span class="line">    body: #container.box</span><br><span class="line">        .h-wrapper</span><br><span class="line">            include _partial/nav-menu.pug</span><br><span class="line">        // article content</span><br><span class="line">        block content</span><br><span class="line"></span><br><span class="line">        include _partial/footer.pug</span><br></pre></td></tr></table></figure>
 <p>其中:</p>
 <ul>
 <li><code>theme.*</code> 为主题配置文件 <code>_config.yml</code> 中的参数</li>
@@ -270,7 +270,7 @@
     <content><![CDATA[<p><a href="https://hexo.io/">Hexo</a>是一个快速、简洁且高效的博客框架，支持 <code>Markdown</code> 的绝大部分功能；具有超快生成速度，让数百个 <code>MarkDown</code> 源文件在几秒内快速渲染成全站 <code>HTML</code> 页面；还拥有各式各样的插件支持功能扩展。</p>
 <p>但是就像很多教程里面写的那样，搭建 Hexo 本地环境，需要安装 <code>Node.js</code>、<code>Git</code> 以及使用 <code>npm</code> 进行安装和配置。这对于毫无经验的新手来说，是一个很大的挑战。同时，由于这些环境的存在，导致如果需要更换计算机的时候，重新安装配置一个新的Hexo环境，又得花费一些功夫。</p>
 <p>所以呢，我们整合了一个 Hexo 便携版，来简化本地环境的部署，这就是我们的GoodHexo。</p>
-<p><img src="../images/GoodHexo.png"></p>
+<p><img src="../images/GoodHexo.png" loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'></p>
 <ul>
 <li>当你重装系统后，只要GoodHexo目录还在，直接接着用即可；</li>
 <li>当你想换个电脑，只需要将GoodHexo目录移到新电脑上即可。甚至，你可以将这个文件夹装到U盘里，走哪插哪就行。</li>
@@ -317,7 +317,7 @@
 <p>为了便携的需要，不能配置固定的环境变量，所以除此之外还有相应的批处理脚本，下文将详细介绍。</p>
 <h1 id="从零开始，一分钟使用-GoodHexo-写作环境"><a href="#从零开始，一分钟使用-GoodHexo-写作环境" class="headerlink" title="从零开始，一分钟使用 GoodHexo 写作环境"></a>从零开始，一分钟使用 GoodHexo 写作环境</h1><p>说了这么多，我们这就开始教你如何在1分钟内，从零开始使用 GoodHexo 写作环境！</p>
 <h2 id="认识文件目录"><a href="#认识文件目录" class="headerlink" title="认识文件目录"></a>认识文件目录</h2><p>该订制的GoodHexo便携包基本上已经包含了Hexo博客所需的所有依赖，<strong>添加新主题新功能如果缺依赖请按照主题文档去安装</strong>更新即可。<br>上面的<strong>压缩包下载解压</strong>后，其目录结构如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">GOODHEXO #便携包根目录</span><br><span class="line">|   1.新建文章.bat  #要新建文章运行此批处理，填文件名建议别用中文</span><br><span class="line">|   2.本地测试.bat  #写完文章可以启动本地服务端测试预览效果</span><br><span class="line">|   3.渲染并部署.bat #确定文章写完了，那么就运行此批处理发布</span><br><span class="line">|   启动命令行.bat #给有经验的人用，直达bash界面</span><br><span class="line">|   清理旧文件后部署.bat  #部署也没报错，但博客就是没更新或者其他异常，那么用这个来部署试试</span><br><span class="line">|   </span><br><span class="line">+---hexo    #hexo程序工作目录</span><br><span class="line">|   |   .gitignore  #指定Git提交时忽略的文件规则，一般也不要动</span><br><span class="line">|   |   db.json  #程序自动生成的，不要动</span><br><span class="line">|   |   package.json  #不要动</span><br><span class="line">|   |   _config.yml  #hexo的主配置文件，定义标题，作者，导航菜单等</span><br><span class="line">|   |   </span><br><span class="line">|   +---node_modules  #hexo的依赖环境，不要动</span><br><span class="line">|   +---scaffolds  #文章&#x2F;页面&#x2F;草稿模板，不会就不要动</span><br><span class="line">|   +---source  #网站根目录</span><br><span class="line">|   |   README.md #本便携包示例文档</span><br><span class="line">|   |   \---images  #图片资源，网站路径为：&#x2F;images</span><br><span class="line">|   |   |   GoodHexo.png  #图片引用地址为：&#x2F;images&#x2F;GoodHexo.png，也可以：..&#x2F;images&#x2F;GoodHexo.png</span><br><span class="line">|   |   \---_posts  #你所有的文章都存在这个目录底下，通过批处理新建文章会自动建到这个目录下</span><br><span class="line">|   |   |   hello-world.md  #示例文章源文件，该MarkDown文件会被hexo渲染成HTML页发布</span><br><span class="line">|   |   </span><br><span class="line">|   +---themes  #主题存放目录</span><br><span class="line">|   |   \---landscape #默认主题</span><br><span class="line">|   |   </span><br><span class="line">|       </span><br><span class="line">\---support #便携程序包，包含nodejs和Git环境，不要动</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">GOODHEXO #便携包根目录</span><br><span class="line">|   1.新建文章.bat  #要新建文章运行此批处理，填文件名建议别用中文</span><br><span class="line">|   2.本地测试.bat  #写完文章可以启动本地服务端测试预览效果</span><br><span class="line">|   3.渲染并部署.bat #确定文章写完了，那么就运行此批处理发布</span><br><span class="line">|   启动命令行.bat #给有经验的人用，直达bash界面</span><br><span class="line">|   清理旧文件后部署.bat  #部署也没报错，但博客就是没更新或者其他异常，那么用这个来部署试试</span><br><span class="line">|   </span><br><span class="line">+---hexo    #hexo程序工作目录</span><br><span class="line">|   |   .gitignore  #指定Git提交时忽略的文件规则，一般也不要动</span><br><span class="line">|   |   db.json  #程序自动生成的，不要动</span><br><span class="line">|   |   package.json  #不要动</span><br><span class="line">|   |   _config.yml  #hexo的主配置文件，定义标题，作者，导航菜单等</span><br><span class="line">|   |   </span><br><span class="line">|   +---node_modules  #hexo的依赖环境，不要动</span><br><span class="line">|   +---scaffolds  #文章/页面/草稿模板，不会就不要动</span><br><span class="line">|   +---source  #网站根目录</span><br><span class="line">|   |   README.md #本便携包示例文档</span><br><span class="line">|   |   \---images  #图片资源，网站路径为：/images</span><br><span class="line">|   |   |   GoodHexo.png  #图片引用地址为：/images/GoodHexo.png，也可以：../images/GoodHexo.png</span><br><span class="line">|   |   \---_posts  #你所有的文章都存在这个目录底下，通过批处理新建文章会自动建到这个目录下</span><br><span class="line">|   |   |   hello-world.md  #示例文章源文件，该MarkDown文件会被hexo渲染成HTML页发布</span><br><span class="line">|   |   </span><br><span class="line">|   +---themes  #主题存放目录</span><br><span class="line">|   |   \---landscape #默认主题</span><br><span class="line">|   |   </span><br><span class="line">|       </span><br><span class="line">\---support #便携程序包，包含nodejs和Git环境，不要动</span><br></pre></td></tr></table></figure>
 
 <h2 id="开始使用"><a href="#开始使用" class="headerlink" title="开始使用"></a>开始使用</h2><h3 id="详细个性化设置"><a href="#详细个性化设置" class="headerlink" title="详细个性化设置"></a>详细个性化设置</h3><p>拿到这个便携包，一些基础配置和基本的主题设置等院长都已经给你做好了，只需要自行对博客网站进行个性化详细设置即可。</p>
 <p>个性化设置主要有两个地方：</p>
@@ -327,13 +327,13 @@
 </ol>
 <p>依次打开就能看个大概了，根据自己的需要及主题帮助完成自己要的个性化设置。更深入的个性化基本上需要在主题上做文章，请自行查看主题帮助，或者研究主题源代码即可完成。</p>
 <p>修改的时候请注意格式，否则会导致错误而无法正常使用，比如 <code>:</code> 一定要是英文的且后面有内容的话至少要跟一个空格，配置内容跟后面的 <code>#</code> 注释之间至少要有一个空格，具体错误可以启动命令行输入 <code>hexo s --debug</code> 查看。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/828767/static/images/goodhexo_config_site.png" alt="网站配置"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/828767/static/images/goodhexo_config_site.png" alt="网站配置" loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'></p>
 <p>上图就是一个网站配置示例，配置项 <code>:</code> 后面<strong>如果要添加值至少带了一个空格</strong>，值带中文或者特殊符号建议用英文引号 <code>&#39;&#39;</code> 引起来，一行以 <code>#</code> 开头表示注释内容，配置项后面加空格再 <code>#</code> 则后面部分才是注释，如下面一个配置项：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">keywords: &#39;一网盟,yiwangmeng,GoodHexo,hexo便携版&#39; #网站SEO关键词，多个词用英文逗号区隔</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">keywords: &#x27;一网盟,yiwangmeng,GoodHexo,hexo便携版&#x27; #网站SEO关键词，多个词用英文逗号区隔</span><br></pre></td></tr></table></figure>
 
 <h3 id="写一篇自己的文章"><a href="#写一篇自己的文章" class="headerlink" title="写一篇自己的文章"></a>写一篇自己的文章</h3><p>设置好后，就可以开始动手写自己的文章了。</p>
 <h4 id="step1-新建文章"><a href="#step1-新建文章" class="headerlink" title="step1.新建文章"></a>step1.新建文章</h4><p>运行 <code>1.新建文章.bat</code> ，按提示填写文章名称，建议不要使用中文。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/828767/static/images/hexo-new.gif"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/828767/static/images/hexo-new.gif" loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'></p>
 <p>回车确认后会在 <code>hexo</code> 目录下的对应目录新建个 <code>.md</code> 文件，文件名以刚才输入的文章名称命名，注意提示的文件路径和新创建的文件名，如： <code>hexo\source\_posts\helloworld.md</code></p>
 <h4 id="step2-编辑文章MarkDown文件"><a href="#step2-编辑文章MarkDown文件" class="headerlink" title="step2. 编辑文章MarkDown文件"></a>step2. 编辑文章MarkDown文件</h4><p>使用任意文本编辑器打开你刚新建的文章MarkDown源文件，按约定格式修改 <code>Front-matter</code> 中参数值，以及在 <code>Front-matter</code> 之后写你想写的内容即可，推荐编辑器首选用vscode或者Atom，关于编辑器以下文章可以阅读下：</p>
 <ol>
@@ -344,7 +344,7 @@
 </ol>
 <p>如果不依赖MarkDown编辑器，那么你需要掌握基本的MarkDown语法，然后就可以用任意文本编辑器「当然，Windows系统自带的记事本还是不推荐用」，按MarkDown语法写文档了。<br>MarkDown语法可以参考 <a href="http://xianbai.me/learn-md/article/about/readme.html">这个 Markdown 教程</a>。</p>
 <p><strong>需要额外注意的是</strong>：Hexo对MarkDown文档头有规范，就是在文档最开始两个 <code>---</code> 中间的那部分，官方称之为 <code>Front-matter</code></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: &#39;Hexo，从此开始...&#39;  #文章标题，新建文章的时候填的会自动写到这里</span><br><span class="line">date: 2018-1-12 17:19:27  #文章创建时间</span><br><span class="line">categories: 搞软件 #分类，也可以如下一行那种换行后写分类</span><br><span class="line">tags:  #标签</span><br><span class="line">  - 晒酷软  #这是个标签</span><br><span class="line">  - 做网站  #这是另一个标签</span><br><span class="line">toc: true  #是否显示目录，false不显示，true显示，需要主题支持</span><br><span class="line">top:  #填数字，值越大的文章在首页就越置顶，本包已集成</span><br><span class="line">comments: true  #是否允许评论，需要主题支持</span><br><span class="line">keywords: &#39;&#39;    #文章关键词，需要主题支持</span><br><span class="line">description:  &#39;文章摘要，可以是一大段，</span><br><span class="line">可以换行，用英文引号括起来&#39;  #不填则根据主题设计截取对应字数</span><br><span class="line">---</span><br><span class="line">上面部分是规定的头部信息，这行开始就是文章内容了...</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: &#x27;Hexo，从此开始...&#x27;  #文章标题，新建文章的时候填的会自动写到这里</span><br><span class="line">date: 2018-1-12 17:19:27  #文章创建时间</span><br><span class="line">categories: 搞软件 #分类，也可以如下一行那种换行后写分类</span><br><span class="line">tags:  #标签</span><br><span class="line">  - 晒酷软  #这是个标签</span><br><span class="line">  - 做网站  #这是另一个标签</span><br><span class="line">toc: true  #是否显示目录，false不显示，true显示，需要主题支持</span><br><span class="line">top:  #填数字，值越大的文章在首页就越置顶，本包已集成</span><br><span class="line">comments: true  #是否允许评论，需要主题支持</span><br><span class="line">keywords: &#x27;&#x27;    #文章关键词，需要主题支持</span><br><span class="line">description:  &#x27;文章摘要，可以是一大段，</span><br><span class="line">可以换行，用英文引号括起来&#x27;  #不填则根据主题设计截取对应字数</span><br><span class="line">---</span><br><span class="line">上面部分是规定的头部信息，这行开始就是文章内容了...</span><br></pre></td></tr></table></figure>
 
 <p>对于文章来说，以上 <code>Front-matter</code> 参数除了 <code>title:</code> 都不是必须的，请根据自己的需求填写。</p>
 <blockquote>
@@ -353,7 +353,7 @@
 <p>如果参数值中间涉及特殊字符或者空格等，请使用英文的单引号 <code>&#39;&#39;</code> 将你的内容括起来，就如上面的示例一样。</p>
 <p>更多 <code>Front-matter</code> 参数详见官方文档：<a href="https://hexo.io/zh-cn/docs/front-matter.html">https://hexo.io/zh-cn/docs/front-matter.html</a></p>
 <p>文章参数设置完后，就可以在 <code>---</code> 下一行写自己想写的任何内容了，以下都属于你文章的内容。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/828767/static/images/hexo-edit.gif"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/828767/static/images/hexo-edit.gif" loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'></p>
 <h4 id="step3-渲染并发布"><a href="#step3-渲染并发布" class="headerlink" title="step3.渲染并发布"></a>step3.渲染并发布</h4><p>文章写好保存，那就运行 <code>3.渲染并部署.bat</code> ，该批处理会将你的MarkDown源文件套用主题模板渲染成HTML静态页，并把静态页部署到网站空间，最后提示 <code>deploy done：git</code> 就表示已部署完成，要不了两分钟，访问你的网站地址就能看到效果了。</p>
 <p>以上步骤请仔细阅读，再写新文章，重复以上步骤即可。</p>
 <h3 id="文章增-删-改"><a href="#文章增-删-改" class="headerlink" title="文章增/删/改"></a>文章增/删/改</h3><ul>
@@ -368,11 +368,11 @@
 <p>新手在使用过程中可能会遇到一些问题，请参考我们整理的：<a href="http://yiwangmeng.com/?p=90">GoodHexo使用常见问题及解决办法</a>。</p>
 <h1 id="进阶"><a href="#进阶" class="headerlink" title="进阶"></a>进阶</h1><p>如果你喜欢折腾，Hexo进阶部署使用可以参考<a href="http://yiwangmeng.com/?p=92">Hexo博客Git-VPS部署完整记录</a>。</p>
 <p>使用过程中如需帮助，欢迎关注微信公众号，淘宝店，我的博客或者加入我们的交流群。</p>
-<div style="float:left;border:solid 1px 000;margin:2px;"><img src="https://cdn.jsdelivr.net/gh/828767/static/images/QR-atm.png"  width="200" height="260" ></div>
+<div style="float:left;border:solid 1px 000;margin:2px;"><img src="https://cdn.jsdelivr.net/gh/828767/static/images/QR-atm.png"  width="200" height="260"  loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'></div>
 
-<div style="float:left;border:solid 1px 000;margin:2px;"><img src="https://cdn.jsdelivr.net/gh/828767/static/images/QR-Taobao.png" width="200" height="260" ></div>
+<div style="float:left;border:solid 1px 000;margin:2px;"><img src="https://cdn.jsdelivr.net/gh/828767/static/images/QR-Taobao.png" width="200" height="260"  loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'></div>
 
-<div style="float:left;border:solid 1px 000;margin:2px;"><img src="https://cdn.jsdelivr.net/gh/828767/static/images/QR-QQ-260489333.png" width="200" height="260" ></div>
+<div style="float:left;border:solid 1px 000;margin:2px;"><img src="https://cdn.jsdelivr.net/gh/828767/static/images/QR-QQ-260489333.png" width="200" height="260"  loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'></div>
 <div style="float:none;clear:both;"></div>
 
 <h1 id="备注"><a href="#备注" class="headerlink" title="备注"></a>备注</h1><blockquote>
