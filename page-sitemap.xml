@@ -8,6 +8,13 @@
     </url>
     
     <url>
+        <loc>https://xusencan.github.io/product/</loc>
+        <lastmod>2023-03-21T07:39:11.185Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
         <loc>https://xusencan.github.io/contact/</loc>
         <lastmod>2020-12-23T11:56:26.115Z</lastmod>
         <changefreq>weekly</changefreq>
